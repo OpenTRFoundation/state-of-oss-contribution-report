@@ -1,0 +1,1360 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title lang="en">OpenTR | State of Open Source Contribution in Turkey</title>
+    <title lang="tr">OpenTR | Türkiye'de Açık Kaynağa Katkının Durumu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.7/d3.layout.cloud.min.js" crossorigin="anonymous"></script>
+
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="<%= require('./src/assets/logo.svg') %>"/>
+                <span>OpenTR</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" lang="en">
+                    <li class="nav-item">
+                        <a class="nav-link active" target="_blank" href="https://opentr.foundation">About OpenTR</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            🇬🇧 English
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item turkish">🇹🇷 Türkçe</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" lang="tr">
+                    <li class="nav-item">
+                        <a class="nav-link active" target="_blank" href="https://opentr.foundation">OpenTR Hakkında</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            🇹🇷 Türkçe
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item english">🇬🇧 English</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container content">
+    <h1 class="display-4">
+        <span lang="en">State of Open Source Contribution in Turkey</span>
+        <span lang="tr">Türkiye'de Açık Kaynağa Katkının Durumu</span>
+    </h1>
+    <p class="lead">
+        <span lang="en">January 7, 2024</span>
+        <span lang="tr">7 Ocak 2024</span>
+    </p>
+
+    <h1 class="display-6 section-header">
+        <span lang="en">1. Introduction</span>
+        <span lang="tr">1. Giriş</span>
+    </h1>
+
+    <p class="lead">
+        <span lang="en">
+            Open source software is a big deal in the tech world, where people work together to create and share free software.
+        </span>
+        <span lang="tr">
+            Teknoloji dünyasında önemli bir kavram olan açık kaynak yazılım, insanların birlikte çalışarak ücretsiz yazılım oluşturduğu ve paylaştığı bir sistemdir.
+        </span>
+    </p>
+
+    <p class="lead">
+        <span lang="en">
+            This report, "The State of Open Source Contribution in Turkey," looks at data from GitHub and shows the stats related to GitHub usage in Turkey and the contributions from Turkey to open source.
+        </span>
+        <span lang="tr">
+            Bu rapor, "Türkiye'de Açık Kaynağa Katkının Durumu", GitHub'dan gelen verilerı kullanarak Türkiye'deki GitHub kullanımı ve Türkiye'nin açık kaynağa katkıları ile ilgili istatistikleri göstermektedir.
+        </span>
+    </p>
+    <p class="lead">
+        <span lang="en">
+            We also talk about <strong>"focus projects"</strong>, which are special projects we want more Turkish contributors to work on.
+            These projects offer a great chance for Turkish developers to get involved and make a difference in the worldwide open source community.
+        </span>
+        <span lang="tr">
+            Ayrıca, daha fazla Türk katılımcının katkı yapmasını istediğimiz özel projeler olan <strong>"odak projeler"</strong>hakkında da konuşuyoruz.
+            Bu projeler, Türk geliştiricilerin katılabileceği ve dünya çapındaki açık kaynak topluluğunda fark yaratma şansı sunan projelerdir.
+        </span>
+    </p>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">2. Getting Started</span>
+            <span lang="tr">2. Önbilgi</span>
+        </h1>
+        <p class="lead">
+            <span lang="en">
+                We collected the data from GitHub API using a custom written software called <a href="https://github.com/OpenTRFoundation/cuttlecat">OpenTR/CuttleCat</a>.
+                All the location related data is collected from the location field of the user profile. We went an extra mile to understand if the location is actually in Turkey.
+            </span>
+            <span lang="tr">
+                Verileri GitHub API'sinden <a href="https://github.com/OpenTRFoundation/cuttlecat">OpenTR/CuttleCat</a> isimli özel yazılan bir yazılım kullanarak topladık.
+                Tüm konumla ilgili veriler, kullanıcı profili içindeki konum alanından toplanmıştır. Konumun gerçekten Türkiye'de olup olmadığını anlamak için ekstra bir çaba sarf ettik.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">Collected data can be found in <a href="https://github.com/OpenTRFoundation/state-of-oss-contribution">OpenTRFoundation/state-of-oss-contribution</a> repository.</span>
+            <span lang="tr">Toplanan veriler, <a href="https://github.com/OpenTRFoundation/state-of-oss-contribution">OpenTR/state-of-oss-contribution</a> repository'sinde görülebilir.</span>
+        </p>
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">3. Comparison with GitHub Innovation Graph data</span>
+            <span lang="tr">3. GitHub Innovation Graph verileri ile karşılaştırma</span>
+        </h1>
+        <p class="lead">
+            <span lang="en">
+                <a href="https://innovationgraph.github.com/economies/tr">GitHub Innovation Graph</a> is a great resource for understanding country specific GitHub usage.
+                Its data is aggregated from GitHub network activity and data.
+            </span>
+            <span lang="tr">
+                <a href="https://innovationgraph.github.com/economies/tr">GitHub Innovation Graph</a>, ülkelere özel GitHub kullanımını anlamak için harika bir kaynaktır.
+                Verileri, GitHub ağ etkinliği ve verilerinden toplanmıştır.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                GitHub is using some internal resources when building their Innovation Graph, which are not accessible to public.
+                They don't need to use the location field user provided, as they have access to the IP address of the user and thus the location.
+                GitHub uses the IP address to determine the country of the user as described in
+                <a href="https://github.com/github/innovationgraph/blob/main/docs/datasheet.md#6-what-are-the-contents-of-this-dataset">their datasheet.</a>
+            </span>
+            <span lang="tr">
+                GitHub, Innovation Graph'ı oluştururken herkese açık olmayan bazı iç kaynakları kullanmaktadır.
+                Kullanıcının IP adresine ve dolayısıyla konumuna erişebildikleri için, kullanıcının sağladığı konum alanını kullanmalarına gerek yoktur.
+                GitHub, <a href="https://github.com/github/innovationgraph/blob/main/docs/datasheet.md#6-what-are-the-contents-of-this-dataset">veri seti bilgilendirmesinde</a> yazıldığı üzere, kullanıcının ülkesini belirlemek için IP adresini kullanmaktadır.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                We compared our data with the data from GitHub Innovation Graph, and we understand that GitHub Innovation Graph data is more accurate, but it is less detailed.
+                As they only provide aggregated data, we can't see the distribution of the users in Turkey per province for example.
+                Similarly, we cannot see the number of active users or their contribution to open source projects.
+            </span>
+            <span lang="tr">
+                Verilerimizi GitHub Innovation Graph verileri ile karşılaştırdık ve GitHub Innovation Graph verilerinin daha doğru olduğunu, ancak daha az ayrıntılı olduğunu anladık.
+                Yalnızca toplu veri sağladıkları için, örneğin Türkiye'deki kullanıcıların il bazında dağılımını göremiyoruz.
+                Benzer şekilde, aktif kullanıcıların sayısını veya açık kaynak projelerine katkılarını göremiyoruz.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                For example, GitHub Innovation Graph data shows 1,317,401 users in Turkey as of Q1 2023, while we found around 110,000 users with a location field somewhere in Turkey.
+                This is because the location field is a plain-text and optional input.
+            </span>
+            <span lang="tr">
+                Örneğin, GitHub Innovation Graph verileri, 2023 Q1 itibariyle Türkiye'de 1.317.401 kullanıcı gösterirken, biz konum bilgisi Türkiye'de bir yer olarak girmiş olan yaklaşık 110.000 kullanıcı bulduk.
+                Bu, konum alanının düz metin ve opsiyonel bir alan olması nedeniyledir.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                This 1.3M vs 110K ratio can be used to have a feeling about the number of users from Turkey who don't have a location field in their profile with a value of somewhere in Turkey.
+            </span>
+            <span lang="tr">
+                Bu 1,3 milyona karşı 110 bin oranı, Türkiye'de olmalarına karşın, profillerinde Türkiye'de bir yer olarak bir konum yazmayan kullanıcıların sayısı hakkında bir fikir edinmek için kullanılabilir.
+            </span>
+        </p>
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">4. Software people in Turkey from GitHub usage</span>
+            <span lang="tr">4. Türkiye'deki yazılımcılar ve GitHub kullanımı</span>
+        </h1>
+
+        <p class="lead">
+            <span lang="en">
+                This section gives an overview of software industry in Turkey, with regard to GitHub usage.
+            </span>
+            <span lang="tr">
+                Bu bölüm, GitHub kullanımı açısından Türkiye'deki yazılım endüstrisine genel bir bakış sunmaktadır.
+            </span>
+        </p>
+
+        <div>
+            <h2>
+                <span lang="en">Number of GitHub users with a location somewhere in Turkey</span>
+                <span lang="tr">Türkiye'de bir yer olarak bir konum yazmış GitHub kullanıcılarının sayısı</span>
+            </h2>
+
+            <div id="user-count-cards" class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                <div class="col">
+                    <div class="total card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en">Total</span>
+                                <span lang="tr">Toplam</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-0 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-1 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-2 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="github-user-map">
+            </div>
+
+            <div id="github-user-map-tooltip">
+                <h1 class="province-name display-6" style="text-align: center;">
+                    <span lang="en"></span>
+                    <span lang="tr"></span>
+                </h1>
+                <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-count display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Count</span>
+                                    <span lang="tr">Sayı</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-population display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Population</span>
+                                    <span lang="tr">Nüfus</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-count-population-ratio display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Count per 1M people</span>
+                                    <span lang="tr">1 milyon kişiye düşen</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Summary</span>
+                <span lang="tr">Özet</span>
+            </h3>
+
+            <p class="lead">
+                <span lang="en">
+                    These users have entered a location on GitHub that we matched with Turkey.
+                    As GitHub's location input is a plain-text input, we worked hard to understand if the location is actually in Turkey.
+                </span>
+                <span lang="tr">
+                    Bu kullanıcılar, GitHub'da Türkiye ile eşleştirdiğimiz bir konum yazan kullanıcılar.
+                    GitHub'ın konum girdisi düz metin bir girdi olduğu için, konumun gerçekten Türkiye'de olup olmadığını anlamak için çok çalıştık.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Istanbul has the most users by having ~40% of the all users. Ankara comes the second, followed up by Izmir.
+                </span>
+                <span lang="tr">
+                    İstanbul, tüm kullanıcıların ~40%'ına sahip olarak en fazla kullanıcıya sahip. Ankara ikinci sırada, İzmir ise onu takip ediyor.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    These 3 big provinces have more than 50% of the users.
+                </span>
+                <span lang="tr">
+                    Bu 3 büyük il, kullanıcıların %50'sinden fazlasına sahip.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    It is not possible to determine the provinces of ~30% of the users.
+                </span>
+                <span lang="tr">
+                    Kullanıcıların %30'unun ilini belirlemek mümkün değil.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Coloring of the provinces are based on the number of users in that province per 1M people.
+                    This can be thought of a score of a province's software industry.
+                </span>
+                <span lang="tr">
+                    İllerin renklendirmesi, o ildeki kullanıcı sayısına göre 1 milyon kişi başına düşen kullanıcı sayısına göre belirlenmiştir.
+                    Bu, bir ilin yazılım endüstrisinin bir puanı olarak düşünülebilir.
+                </span>
+            </p>
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Criteria</span>
+                <span lang="tr">Kriterler</span>
+            </h3>
+            <ul class="lead">
+                <li>
+                    <span lang="en">
+                        Users who have a location input on GitHub to be one of these:
+                    </span>
+                    <span lang="tr">
+                        GitHub'da konum olarak bunlardan birini yazan kullanıcılar:
+                    </span>
+                    <ul>
+                        <li>
+                            <span lang="en">
+                                Turkey (Türkiye, TR, TUR, etc. also accepted, but some fine-tuning is done to ignore irrelevant users)
+                            </span>
+                            <span lang="tr">
+                                Türkiye (Türkiye, TR, TUR, vb. de kabul edilir, ancak alakasız kullanıcıları çıkarmak için bazı ince ayarlar yapılmıştır)
+                            </span>
+                        </li>
+                        <li>
+                            <span lang="en">
+                                A province in Turkey (all of these are accepted: Şanlıurfa, Sanliurfa, Şanliurfa, Sanlıurfa, Urfa)
+                            </span>
+                            <span lang="tr">
+                                Türkiye'deki bir il (bunların hepsi kabul edilir: Şanlıurfa, Sanliurfa, Şanliurfa, Sanlıurfa, Urfa)
+                            </span>
+                        </li>
+                        <li>
+                            <span lang="en">
+                                A district in Turkey (all of these are accepted: Çiğli, Cigli, Çigli, ...)
+                            </span>
+                            <span lang="tr">
+                                Türkiye'deki bir ilçe (bunların hepsi kabul edilir: Çiğli, Cigli, Çigli, ...)
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h2>
+            <span lang="en">
+                Number of <strong><i>active</i></strong> GitHub users with location somewhere in Turkey
+            </span>
+            <span lang="tr">
+                Türkiye'de bir yer olarak bir konum yazmış <strong><i>aktif</i></strong> GitHub kullanıcılarının sayısı
+            </span>
+        </h2>
+
+        <div id="active-user-count-cards" class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+            <div class="col">
+                <div class="total card border-light text-center">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h1 class="count display-4">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                        <h1 class="name display-6">
+                            <span lang="en">Total</span>
+                            <span lang="tr">Toplam</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="province-0 card border-light text-center">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h1 class="count display-4">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                        <h1 class="name display-6">
+                            <span lang="en"></span>
+                            <span lang="tr"></span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="province-1 card border-light text-center">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h1 class="count display-4">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                        <h1 class="name display-6">
+                            <span lang="en"></span>
+                            <span lang="tr"></span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="province-2 card border-light text-center">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <h1 class="count display-4">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                        <h1 class="name display-6">
+                            <span lang="en"></span>
+                            <span lang="tr"></span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="active-github-user-map">
+        </div>
+
+        <div id="active-github-user-map-tooltip">
+            <h1 class="province-name display-6" style="text-align: center;">
+                <span lang="en"></span>
+                <span lang="tr"></span>
+            </h1>
+            <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+                <div class="col">
+                    <div class="card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="province-count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="display-6">
+                                <span lang="en">Count</span>
+                                <span lang="tr">Sayı</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="province-population display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="display-6">
+                                <span lang="en">Population</span>
+                                <span lang="tr">Nüfus</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="province-count-population-ratio display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="display-6">
+                                <span lang="en">Count per 1M people</span>
+                                <span lang="tr">1 milyon kişiye düşen</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <h3>
+                <span lang="en">Summary</span>
+                <span lang="tr">Özet</span>
+            </h3>
+
+            <p class="lead">
+                <span lang="en">
+                    Only ~20% of the users are active, according to the criteria below.
+                </span>
+                <span lang="tr">
+                    Kullanıcıların yalnızca ~20%'si aşağıdaki kriterlere göre aktif.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Ratios of the provinces are similar to the total user count.
+                </span>
+                <span lang="tr">
+                    İllerin 1 milyon kişiye düşen aktif kullanıcı sayıları, 1 milyon kişiye düşen toplam kullanıcı sayıları ile orantılı.
+                </span>
+            </p>
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Criteria</span>
+                <span lang="tr">Kriterler</span>
+            </h3>
+            <ul class="lead">
+                <li>
+                    <span lang="en">These users have at least 1 repository, and they made an activity in the last 90 days.</span>
+                    <span lang="tr">Bu kullanıcıların en az 1 repository'si var ve son 90 günde bir aktivitede bulundular.</span>
+                </li>
+            </ul>
+            <ul class="lead">
+                <li>
+                    <span lang="en">Activities are any of the following:</span>
+                    <span lang="tr">Aktiviteler aşağıdakilerden biri:</span>
+                </li>
+                <ul>
+                    <li>
+                        <span lang="en">
+                            Code commit
+                        </span>
+                        <span lang="tr">
+                            Kod commitlemek
+                        </span>
+                    </li>
+                    <li>
+                        <span lang="en">
+                            Create an issue
+                        </span>
+                        <span lang="tr">
+                            Bir issue oluşturmak
+                        </span>
+                    </li>
+                    <li>
+                        <span lang="en">
+                            Create a pull request
+                        </span>
+                        <span lang="tr">
+                            Bir pull request oluşturmak
+                        </span>
+                    </li>
+                    <li>
+                        <span lang="en">
+                            Review a pull request
+                        </span>
+                        <span lang="tr">
+                            Bir pull request'i review etmek
+                        </span>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">5. What projects?</span>
+            <span lang="tr">5. Hangi projeler?</span>
+        </h1>
+        <p class="lead">
+            <span lang="en">
+                OpenTR's mission is to increase the number of contributors from Turkey to open source projects.
+                However, what are these projects?
+                This section gives an overview of such projects.
+            </span>
+            <span lang="tr">
+                OpenTR'nin misyonu, Türkiye'den açık kaynak projelere katkıda bulunanların sayısını artırmaktır.
+                Ancak, bu projeler hangileri?
+                Bu bölüm, bu tür projelere bir genel bakış sunmaktadır.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                Any public project on GitHub is open source by definition (as long as it has a OSS license).
+                However, we want more contributors to work on some projects that we think have an impact.
+            </span>
+            <span lang="tr">
+                GitHub'daki herhangi bir public proje, tanım gereği açık kaynaktır (bir açık kaynak lisansı varsa).
+                Ancak, daha fazla katılımcının etkili olduğunu düşündüğümüz bazı projelerde çalışmasını istiyoruz.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                We call these projects <strong>focus projects</strong>.
+            </span>
+            <span lang="tr">
+                Bu projelere <strong>odak projeler</strong> diyoruz.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                Criteria for focus projects can be seen in the next section.
+            </span>
+            <span lang="tr">
+                Odak projeler için kriterler bir sonraki bölümde görülebilir.
+            </span>
+        </p>
+
+        <h2>
+            <span lang="en">
+                Projects vs organizations vs repositories
+            </span>
+            <span lang="tr">
+                Projeler vs organizasyonlar vs repository'ler
+            </span>
+        </h2>
+        <p class="lead">
+            <span lang="en">
+                We use the term <strong>project</strong> in an abstract way to refer to a project such as Linux, Kubernetes, or React.
+                We cannot tie a project to a repository or a GitHub organization, as some projects may have multiple repositories.
+                Some projects may even have repositories under different organizations.
+            </span>
+            <span lang="tr">
+                Linux, Kubernetes veya React gibi bir projeden bahsederken, soyut bir şekilde <strong>proje</strong> terimini kullanıyoruz.
+                Bir projeyi bir repository veya GitHub organizasyonuna bağlayamayız, çünkü bazı projelerin birden fazla repository'si olabilir.
+                Bazı projeler, farklı organizasyonların altında bile repository'lere sahip olabilir.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                For example Kubernetes has multiple repositories under the <code>kubernetes</code> organization, but it also has repositories under other organizations such as <code>kubernetes-sigs</code>.
+                Conversely, the Linux project does not have an organization.
+                Its main repository is the <code>torvalds/linux</code> repository.
+            </span>
+            <span lang="tr">
+                Örneğin Kubernetes, <code>kubernetes</code> organizasyonunun altında birden fazla repository'ye sahip, ancak <code>kubernetes-sigs</code> gibi diğer organizasyonların altında da repository'lere sahip.
+                Bunun aksine, Linux projesinin bir organizasyonu yok.
+                Ana repository'si <code>torvalds/linux</code>.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                To make things simpler, we use the term <strong>focus organization</strong> to refer to an organization that has at least one repository that meets the criteria below.
+                Similarly, we use the term <strong>focus repository</strong> to refer to a repository that meets another set of criteria below.
+            </span>
+            <span lang="tr">
+                İşleri sadeleştirmek için, aşağıdaki kriterleri karşılayan en az bir repository'si olan bir organizasyondan bahsetmek için <strong>odak organizasyon</strong> terimini kullanıyoruz.
+                Benzer şekilde, aşağıdaki diğer kriterleri karşılayan bir repository'den bahsetmek için <strong>odak repository</strong> terimini kullanıyoruz.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                OpenTR's goal in this report is to find the number of contributors to open source projects.
+                It is not finding the number of open source repositories or organizations in general.
+                So, when we check users from Turkey, we only check the users who contributed to any repository in a focus organization or to a focus repository.
+            </span>
+            <span lang="tr">
+                OpenTR'nin bu rapordaki amacı, açık kaynak projelerine katkıda bulunanların sayısını bulmaktır.
+                Genel olarak açık kaynak repository'lerinin veya organizasyonlarının sayısını bulmak değildir.
+                Bu nedenle, Türkiye'den kullanıcıları kontrol ettiğimizde, yalnızca bir odak organizasyonun herhangi bir repository'sine veya bir odak repository'ye katkıda bulunan kullanıcıların bilgilerini çekiyoruz.
+            </span>
+        </p>
+    </div>
+
+    <div>
+        <h2>
+            <span lang="en">
+                Focus organizations
+            </span>
+            <span lang="tr">
+                Odak organizasyonlar
+            </span>
+        </h2>
+        <p class="lead">
+            <span lang="en">
+                Contributions to any repositories under these organizations are counted as contributions to open source.
+            </span>
+            <span lang="tr">
+                Bu organizasyonların altındaki herhangi bir repository'ye yapılan katkılar, açık kaynağa yapılan katkılar olarak değerlendirilmiştir.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                We only show the top 50 organizations the following word cloud.
+            </span>
+            <span lang="tr">
+                Aşağıdaki word cloud'da sadece ilk 50 organizasyonu gösteriyoruz.
+            </span>
+        </p>
+        <div id="focus-orgs-word-cloud">
+        </div>
+
+        <h2>
+            <span lang="en">
+                Focus repositories outside organizations
+            </span>
+            <span lang="tr">
+                Organizasyon harici odak repository'ler
+            </span>
+        </h2>
+        <p class="lead">
+            <span lang="en">
+                Similarly, contributions to any of these repositories that are not under any organization are counted as contributions to open source.
+            </span>
+            <span lang="tr">
+                Benzer şekilde, herhangi bir organizasyonun altında olmayan bu repository'lerin herhangi birine yapılan katkılar, açık kaynağa yapılan katkılar olarak değerlendirilmiştir.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                We only show the top 50 repositories the following cloud.
+            </span>
+            <span lang="tr">
+                Aşağıdaki word cloud'da sadece ilk 50 repository'yi gösteriyoruz.
+            </span>
+        </p>
+        <div id="focus-repositories-word-cloud">
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Summary</span>
+                <span lang="tr">Özet</span>
+            </h3>
+
+            <p class="lead">
+                <span lang="en">
+                    We found <span class="focus-org-count">N</span> organizations that have at least repository that meets the criteria below.
+                    These organizations have multiple repositories.
+                    However, number of repositories is not exactly relevant, as we're interested in finding people who contribute any repository under these organizations.
+                </span>
+                <span lang="tr">
+                    Aşağıdaki kriterleri karşılayan en az bir repository'si olan <span class="focus-org-count">N</span> organizasyon bulduk.
+                    Evet, bu organizasyonların birden fazla repository'si var, ancak repository sayısı tam olarak önemli değil, çünkü bu organizasyonların altındaki herhangi bir repository'ye katkıda bulunan kişileri bulmak istiyoruz.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    On top of the organizations, we found <span class="focus-repository-count">N</span> repositories that meet the criteria below.
+                </span>
+                <span lang="tr">
+                    Organizasyonların yanı sıra, aşağıdaki kriterleri karşılayan <span class="focus-repository-count">N</span> repository bulduk.
+                </span>
+            </p>
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Criteria</span>
+                <span lang="tr">Kriterler</span>
+            </h3>
+            <p class="lead">
+                <span lang="en">Focus organizations:</span>
+                <span lang="tr">Odak organizasyonlar:</span>
+            </p>
+            <ul class="lead">
+                <li>
+                    <span lang="en">
+                        Has at least one repository that meets the following criteria:
+                    </span>
+                    <span lang="tr">
+                        Aşağıdaki kriterleri karşılayan en az bir repository'si var:
+                    </span>
+                </li>
+                <ul class="lead">
+                    <li>
+                        <span lang="en">Has minimum 50 stars</span>
+                        <span lang="tr">Minimum 50 star'a sahip</span>
+                    </li>
+                    <li>
+                        <span lang="en">Has minimum 50 forks</span>
+                        <span lang="tr">Minimum 50 fork'a sahip</span>
+                    </li>
+                    <li>
+                        <span lang="en">Has a minimum size of 1000 KiB</span>
+                        <span lang="tr">Minimum 1000 KiB boyutunda</span>
+                    </li>
+                    <li>
+                        <span lang="en">Had an activity within last 90 days</span>
+                        <span lang="tr">Son 90 günde bir aktivite olan</span>
+                    </li>
+                    <li>
+                        <span lang="en">Created after 2008-01-01</span>
+                        <span lang="tr">2008-01-01 tarihinden sonra oluşturulmuş</span>
+                    </li>
+                    <li>
+                        <span lang="en">Created before 365 days ago</span>
+                        <span lang="tr">365 günden önce oluşturulmuş</span>
+                    </li>
+                    <li>
+                        <span lang="en">Public</span>
+                        <span lang="tr">Public</span>
+                    </li>
+                </ul>
+            </ul>
+            <p class="lead">
+                <span lang="en">
+                    Focus repositories:
+                </span>
+                <span lang="tr">
+                    Odak repository'ler:
+                </span>
+            </p>
+            <ul class="lead">
+                <li>
+                    <span lang="en">Has minimum 500 stars</span>
+                    <span lang="tr">Minimum 500 star'a sahip</span>
+                </li>
+                <li>
+                    <span lang="en">Has minimum 300 forks</span>
+                    <span lang="tr">Minimum 300 fork'a sahip</span>
+                </li>
+                <li>
+                    <span lang="en">Has minimum 200 mentionable users</span>
+                    <span lang="tr">Minimum 200 mentionable kullanıcıya sahip</span>
+                </li>
+                <li>
+                    <span lang="en">Has minimum 500 pull requests</span>
+                    <span lang="tr">Minimum 500 pull request'e sahip</span>
+                </li>
+                <li>
+                    <span lang="en">Has a minimum size of 1000 KiB</span>
+                    <span lang="tr">Minimum 1000 KiB boyutunda</span>
+                </li>
+                <li>
+                    <span lang="en">Had an activity within last 90 days</span>
+                    <span lang="tr">Son 90 günde bir aktivite olan</span>
+                </li>
+                <li>
+                    <span lang="en">Created after 2008-01-01</span>
+                    <span lang="tr">2008-01-01 tarihinden sonra oluşturulmuş</span>
+                </li>
+                <li>
+                    <span lang="en">Created before 365 days ago</span>
+                    <span lang="tr">365 günden önce oluşturulmuş</span>
+                </li>
+                <li>
+                    <span lang="en">Public</span>
+                    <span lang="tr">Public</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">6. OSS Contributors from Turkey</span>
+            <span lang="tr">6. Türkiye'den açık kaynağa katkıda bulunanlar</span>
+        </h1>
+        <p class="lead">
+            <span lang="en">
+                This section gives an overview of the contributors from Turkey to open source projects.
+            </span>
+            <span lang="tr">
+                Bu bölüm, Türkiye'den açık kaynak projelerine katkıda bulunanlara bir genel bakış sunmaktadır.
+            </span>
+        </p>
+
+        <div>
+            <h2>
+                <span lang="en">Number of OSS contributors in Turkey</span>
+                <span lang="tr">Türkiye'de açık kaynağa katkıda bulunanların sayısı</span>
+            </h2>
+
+            <div id="oss-contributor-count-cards" class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
+                <div class="col">
+                    <div class="total card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en">Total</span>
+                                <span lang="tr">Toplam</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-0 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-1 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="province-2 card border-light text-center">
+                        <div class="card-body">
+                            <div class="card-text">
+                                <h1 class="count display-4">
+                                    <span lang="en"></span>
+                                    <span lang="tr"></span>
+                                </h1>
+                            </div>
+                            <h1 class="name display-6">
+                                <span lang="en"></span>
+                                <span lang="tr"></span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="oss-contributor-map">
+            </div>
+
+            <div id="oss-contributor-map-tooltip">
+                <h1 class="province-name display-6" style="text-align: center;">
+                    <span lang="en"></span>
+                    <span lang="tr"></span>
+                </h1>
+                <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-count display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Count</span>
+                                    <span lang="tr">Sayı</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-population display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Population</span>
+                                    <span lang="tr">Nüfus</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-light text-center">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <h1 class="province-count-population-ratio display-4">
+                                        <span lang="en"></span>
+                                        <span lang="tr"></span>
+                                    </h1>
+                                </div>
+                                <h1 class="display-6">
+                                    <span lang="en">Count per 1M people</span>
+                                    <span lang="tr">1 milyon kişiye düşen</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>
+                <span lang="en">OSS contributors leaderboard</span>
+                <span lang="tr">Açık kaynağa katkıda bulunanlar sıralaması</span>
+            </h2>
+            <div id="oss-contributors-table-container">
+                <table id="oss-contributors-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <span lang="en">Username</span>
+                            <span lang="tr">Kullanıcı adı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Name</span>
+                            <span lang="tr">İsim</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Company</span>
+                            <span lang="tr">Şirket</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Score</span>
+                            <span lang="tr">Skor</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Most contributed organizations</span>
+                            <span lang="tr">En çok katkıda bulunduğu organizasyonlar</span>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <h3>
+                <span lang="en">Summary</span>
+                <span lang="tr">Özet</span>
+            </h3>
+            <p class="lead">
+                <span lang="en">
+                    According to the criteria mentioned below, there are ~500 open source contributors from Turkey who made contributions in the last 90 days.
+                </span>
+                <span lang="tr">
+                    Aşağıda belirtilen kriterlere göre, son 90 günde bir katkı yapmış ~500 Türkiye'den açık kaynak katkıda bulunan kişi var.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Three big provinces have the same pattern of distribution as the total user count.
+                </span>
+                <span lang="tr">
+                    Üç büyük il, toplam kullanıcı sayısının dağılımında aynı desene sahip.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    It is not possible to determine the provinces of ~35% of the open source contributors.
+                </span>
+                <span lang="tr">
+                    Açık kaynak katkıda bulunanların %35'inin ilini belirlemek mümkün değil.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Scoring calculation is not taking the project's popularity into account.
+                    For example, a pull request to Linux kernel is counted as 10 points, while a pull request to a small project is also counted as 10 points.
+                    This can be improved in the future.
+                </span>
+                <span lang="tr">
+                    Skor hesaplaması, projenin popülaritesini dikkate almıyor.
+                    Örneğin, Linux kernel'e yapılan bir pull request 10 puan olarak sayılırken, küçük bir projeye yapılan bir pull request de 10 puan olarak sayılıyor.
+                    Bu ileride geliştirilebilir.
+                </span>
+            </p>
+        </div>
+
+        <div>
+            <h3>
+                <span lang="en">Criteria</span>
+                <span lang="tr">Kriterler</span>
+            </h3>
+            <ul class="lead">
+                <li>
+                    <span lang="en">The location user entered in the GitHub profile is matched with somewhere in Turkey.</span>
+                    <span lang="tr">GitHub profilindeki konum, Türkiye'deki bir yerle eşleştirilmiştir.</span>
+                </li>
+                <li>
+                    <span lang="en">User had contributions in the last 90 days to a focus repository or to a repository under a focus organization.</span>
+                    <span lang="tr">Kullanıcının son 90 günde bir odak repository'ye veya odak organizasyonun altındaki bir repository'ye katkısı olmuştur.</span>
+                </li>
+                <li>
+                    <span lang="en">User had a score of minimum 20 based on following scoring system:</span>
+                    <span lang="tr">
+                        Kullanıcının aşağıdaki skorlama sistemine göre minimum 20 skoru vardır:
+                    </span>
+                </li>
+                <li>
+                    <ul>
+                        <li>
+                            <span lang="en">Pull request: 10 points</span>
+                            <span lang="tr">Pull request: 10 puan</span>
+                        </li>
+                        <li>
+                            <span lang="en">Pull request review: 5 points</span>
+                            <span lang="tr">Pull request review: 5 puan</span>
+                        </li>
+                        <li>
+                            <span lang="en">Commit: 3 point</span>
+                            <span lang="tr">Commit: 3 puan</span>
+                        </li>
+                        <li>
+                            <span lang="en">Issue: 1 points</span>
+                            <span lang="tr">Issue: 1 puan</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">
+                7. Take aways
+            </span>
+            <span lang="tr">
+                7. Görüşler
+            </span>
+        </h1>
+        <p class="lead">
+            <ul class="lead" style="list-style: decimal;">
+                <li>
+                    <strong>
+                        <span lang="en">
+                            Contribute to Focus Projects
+                        </span>
+                        <span lang="tr">
+                            Odak Projelere Katkıda Bulunun
+                        </span>
+                    </strong>
+                    <p>
+                        <span lang="en">
+                            Change the "I open sourced my project" mindset to "I contribute to open source projects".
+                        </span>
+                        <span lang="tr">
+                            "Projemin kaynağını açtım" düşüncesini "açık kaynak projelere katkıda bulunuyorum" düşüncesiyle değiştirin.
+                        </span>
+                    </p>
+                    <p>
+                        <span lang="en">
+                            Be part of something big!
+                            Contribute to open source projects and gain valuable experience.
+                            Seek mentorship, read <a href="https://opentr.foundation/docs/">OpenTR's guides</a>, and join <a href="https://opentr.foundation/contact/">OpenTR community</a> for support and guidance.
+                            Encourage your company to contribute to these projects and make a positive impact.
+                        </span>
+                        <span lang="tr">
+                            Büyük bir şeyin parçası olun!
+                            Açık kaynak projelerine katkıda bulunun ve deneyim kazanın.
+                            Mentorluk arayın, <a href="https://opentr.foundation/docs/">OpenTR rehberlerini</a> okuyun ve destek ile rehberlik için <a href="https://opentr.foundation/contact/">OpenTR topluluğuna</a> katılın.
+                            Şirketinizi bu projelere katkıda bulunmaya teşvik edin ve olumlu bir etki yaratın.
+                        </span>
+                    </p>
+                    <p>
+                        <strong>
+                            <span lang="en">
+                                Why you should do that?
+                            </span>
+                            <span lang="tr">
+                                Neden bunu yapmalısınız?
+                            </span>
+                        </strong>
+                        <ul>
+                            <li>
+                                <span lang="en">Improve your career by enhancing your skills and visibility globally.</span>
+                                <span lang="tr">
+                                    Becerilerinizi geliştirerek ve küresel olarak görünürlüğünüzü artırarak kariyerinizi ilerletin.
+                                </span>
+                            </li>
+                            <li>
+                                <span lang="en">Help your company by contributing to your company's growth via impactful open source projects.</span>
+                                <span lang="tr">
+                                    Etkili açık kaynak projeleri aracılığıyla şirketinizin büyümesine katkıda bulunarak şirketinize yardımcı olun.
+                                </span>
+                            </li>
+                            <li>
+                                <span lang="en">Help Turkey's software industry by being a driving force in advancing it.</span>
+                                <span lang="tr">
+                                    Türkiye'nin yazılım endüstrisinin ilerlemesine yardımcı olun.
+                                </span>
+                            </li>
+                            <li>
+                                <span lang="en">Help projects you use by giving back to the projects that you rely on.</span>
+                                <span lang="tr">
+                                    Kullandığınız projelere geri verimde bulunarak yardımcı olun.
+                                </span>
+                            </li>
+                        </ul>
+                    </p>
+                    <p>
+                        <strong>
+                            <span lang="en">
+                                Why your company should do that?
+                            </span>
+                            <span lang="tr">
+                                Neden şirketiniz de bunu yapmalı?
+                            </span>
+                        </strong>
+                        <ul>
+                            <li>
+                                <span lang="en">
+                                    Improve your company's brand by showing commitment to community and innovation.
+                                </span>
+                                <span lang="tr">
+                                    Şirketinizin topluluklara ve innovasyona olan bağlılığını göstererek, şirketinizin markasını geliştirin.
+                                </span>
+                            </li>
+                            <li>
+                                <span lang="en">
+                                    Improve your company's hiring by attracting top talent via making a name in open source.
+                                </span>
+                                <span lang="tr">
+                                    Açık kaynakta adınızı duyurun ve en iyi yetenekleri çekerek şirketinizin işe alımını geliştirin.
+                                </span>
+                            </li>
+                            <li>
+                                <span lang="en">
+                                    Improve your company's products by enhancing them through collaborative, community-driven development.
+                                </span>
+                                <span lang="tr">
+                                    İş birliği ve topluluk odaklı geliştirme ile şirketinizin ürünlerinizi iyileştirin.
+                                </span>
+                            </li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <strong>
+                        <span lang="en">
+                            Set Your Location on GitHub
+                        </span>
+                        <span lang="tr">
+                            GitHub'ta Konumunuzu Ayarlayın
+                        </span>
+                    </strong>
+                    <p>
+                        <span lang="en">
+                            Make your presence known! Set your location on GitHub to Turkey or your province.
+                        </span>
+                        <span lang="tr">
+                            Varlığınızı bilinir hale getirin! GitHub'ta konumunuzu Türkiye'ye veya ilinize ayarlayın.
+                        </span>
+                    </p>
+                </li>
+                <li>
+                    <strong>
+                        <span lang="en">
+                            Find out more
+                        </span>
+                        <span lang="tr">
+                            Daha fazlasını öğrenin
+                        </span>
+                    </strong>
+                    <p>
+                        <span lang="en">
+                            Check out <a href="https://opentr.foundation/">OpenTR's website</a> to learn more about OpenTR, open source and how you can contribute to open source.
+                        </span>
+                        <span lang="tr">
+                            Açık kaynak hakkında, açık kaynağa nasıl katkıda bulunabileceğiniz hakkında ve OpenTR ile ilgili daha fazla bilgi edinmek için <a href="https://opentr.foundation/">OpenTR'nin web sitesini</a> ziyaret edin.
+                        </span>
+                    </p>
+                </li>
+            </ul>
+        </p>
+    </div>
+
+</div>
+
+<div style="height: 500px;"></div>
+</body>
+</html>
