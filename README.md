@@ -23,7 +23,7 @@ or, to serve locally:
 npm run serve
 ```
 
-# Deployment
+## Deployment
 
 - `latest` branch is deployed to https://state.opentr.foundation/
 - `main` branch is deployed to https://main--state-of-oss-contribution-report.netlify.app/
@@ -32,6 +32,20 @@ npm run serve
   This is the way to show the previous versions of the report.
 
 `history.html` is only referenced from the `latest` branch in all versions of the report. (https://state.opentr.foundation/history.html)
+
+## Releasing a new version of the report
+
+In `main` branch:
+- Update the date in `index.html`, for Turkish and English text
+- Update `REPORT_DATA_REF` in index.html with the new tag name of the data repository
+- Push changes to `upstream/main` branch
+- Reset `upstream/latest` branch to `upstream/main`
+
+In the new branch:
+- Create a new branch from `main` branch, named `<year>-<month>`, e.g. `2024-01` and push it to the origin
+
+In `main` branch:
+- Update `history.html` (add a new entry)
 
 ## Acknowledgements
 
@@ -45,7 +59,3 @@ TODO:
 - Social media tags (OpenTR website is also missing these stuff)
 - Favicon
 - Google analytics
-- Document new report generation process
-  - Update the date in the title
-  - Update the report data files
-  - ...
