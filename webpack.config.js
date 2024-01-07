@@ -23,7 +23,15 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
+            filename: 'index.html',
             favicon: 'src/assets/favicon.ico',
+            chunks: ['main'],
+        }),
+        new HtmlWebpackPlugin({
+            template: 'history.html',
+            filename: 'history.html',
+            favicon: 'src/assets/favicon.ico',
+            chunks: [],
         }),
 
         // Add your plugins here

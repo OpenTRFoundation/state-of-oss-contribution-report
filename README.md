@@ -23,6 +23,16 @@ or, to serve locally:
 npm run serve
 ```
 
+# Deployment
+
+- `latest` branch is deployed to https://state.opentr.foundation/
+- `main` branch is deployed to https://main--state-of-oss-contribution-report.netlify.app/
+- All the other branches are deployed to `https://<branch>--state-of-oss-contribution-report.netlify.app/`.
+  Create a branch and push it on the origin to get Netlify to build and deploy it.
+  This is the way to show the previous versions of the report.
+
+`history.html` is only referenced from the `latest` branch in all versions of the report. (https://state.opentr.foundation/history.html)
+
 ## Acknowledgements
 
 - [src/province-geojson.json](src/province-geojson.json) is taken from https://raw.githubusercontent.com/alpers/Turkey-Maps-GeoJSON/master/tr-cities.json
@@ -30,13 +40,11 @@ npm run serve
 - Data in [province-populations.json](src/province-populations.json) is taken from Wikipedia.
 
 TODO:
-- CI for building the report automatically deploying it to Netlify in a subdomain
-  - Quarterly releases of the report - live on branches, deployed on different subdomains in Netlify
-  - Index page with links to the latest report and the previous reports - that always lives on the main subdomain
 - Show company leaderboard
 - Show languages for top projects contributed to?
 - Social media tags (OpenTR website is also missing these stuff)
 - Favicon
+- Google analytics
 - Document new report generation process
   - Update the date in the title
   - Update the report data files
