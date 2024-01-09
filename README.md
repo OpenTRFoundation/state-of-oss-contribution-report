@@ -55,6 +55,7 @@ In `main` branch:
 
 TODO:
 - Show company leaderboard
+- Show active vs inactive users
 - Show languages for top projects contributed to?
 - Social media tags (OpenTR website is also missing these stuff)
 - Favicon

@@ -7,6 +7,7 @@ const REPORT_DATA_REF = "2024-01";
 import {BubbleMap} from "./bubbleMap";
 import {NumberFormatterEN, NumberFormatterTR} from "./common";
 import {WordCloud} from "./wordCloud";
+import {BarChart} from "./barChart";
 
 type OssContributor = {
     profile:{
@@ -25,7 +26,11 @@ let focusRepos:{ [nameWithOwner:string]:number };
 let userCounts:{ [province:string]:number };
 let activeUserCounts:{ [province:string]:number };
 let ossContributorCounts:{ [province:string]:number };
+let userSignedUpAt:{ [date:string]:number };
 let ossContributors:OssContributor[];
+let companyOssContributorCounts:{ [company:string]:number };
+let focusRepositoryContributionLeaderBoard:{ [repoNameWithOwner:string]:number };
+let focusOrganizationContributionLeaderBoard:{ [orgName:string]:number };
 
 function enhanceLinks() {
     $(".content a")
@@ -55,7 +60,11 @@ async function main() {
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/210-user-province-counts-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/220-active-user-province-counts-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/230-oss-contributor-province-counts-map.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/240-user-signed-up-at-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/320-oss-contributor-leader-board.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/330-company-oss-contributor-count-map.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/410-focus-repository-contribution-leader-board.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/420-focus-organization-contribution-leader-board.json`),
     ]).then((
         [
             _focusOrgs,
@@ -63,19 +72,34 @@ async function main() {
             _userCounts,
             _activeUserCounts,
             _ossContributorCounts,
-            _ossContributors
+            _userSignedUpAt,
+            _ossContributors,
+            _companyOssContributorCounts,
+            _focusRepositoryContributionLeaderBoard,
+            _focusOrganizationContributionLeaderBoard,
         ]) => {
         focusOrgs = _focusOrgs as { [name:string]:number };
         focusRepos = _focusRepos as { [nameWithOwner:string]:number };
         userCounts = _userCounts as { [province:string]:number };
         activeUserCounts = _activeUserCounts as { [province:string]:number };
         ossContributorCounts = _ossContributorCounts as { [province:string]:number };
+        userSignedUpAt = _userSignedUpAt as { [date:string]:number };
         ossContributors = _ossContributors as OssContributor[];
+        companyOssContributorCounts = _companyOssContributorCounts as { [company:string]:number };
+        focusRepositoryContributionLeaderBoard = _focusRepositoryContributionLeaderBoard as {
+            [repoNameWithOwner:string]:number
+        };
+        focusOrganizationContributionLeaderBoard = _focusOrganizationContributionLeaderBoard as {
+            [orgName:string]:number
+        };
     });
 
     // draw user count map and update the numbers in the cards
     new BubbleMap("#github-user-map", "#github-user-map-tooltip", userCounts).draw();
     doUpdateUserCountCards(userCounts, "#user-count-cards");
+
+    // draw user sign up chart
+    new BarChart("#user-signed-up-at-chart", "#user-signed-up-at-chart-tooltip", userSignedUpAt).draw();
 
     // draw active user count map and update the numbers in the cards
     new BubbleMap("#active-github-user-map", "#active-github-user-map-tooltip", activeUserCounts).draw();
