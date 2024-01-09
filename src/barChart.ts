@@ -1,5 +1,4 @@
 import d3 from "d3";
-import {NumberFormatterEN, NumberFormatterTR} from "./common";
 
 export type BarChartData = {
     [bucket:string]:number;
@@ -15,13 +14,11 @@ const X_AXIS_PADDING = 0.2;
 
 export class BarChart {
     private readonly chartContainerName:string;
-    private chartTooltipName:string;
     private readonly data:BarChartData;
 
 
-    constructor(chartContainerName:string, chartTooltipName:string, data:BarChartData) {
+    constructor(chartContainerName:string, data:BarChartData) {
         this.chartContainerName = chartContainerName;
-        this.chartTooltipName = chartTooltipName;
         this.data = data;
     }
 
@@ -33,6 +30,7 @@ export class BarChart {
         // append the svg object to the body of the page
         const svg = d3.select(this.chartContainerName)
             .append("svg")
+            .attr("class", "bar-chart")
             .attr("viewBox", `0 0 ${CHART_REFERENCE_WIDTH} ${CHART_REFERENCE_HEIGHT}`)
             .append("g")
             .attr("transform", `translate(${Y_AXIS_ANNOTATION_REFERENCE_WIDTH},${X_AXIS_ANNOTATION_REFERENCE_HEIGHT})`);
@@ -79,10 +77,6 @@ export class BarChart {
                 })
             );
 
-        const tooltip = d3
-            .select(this.chartTooltipName)
-            .attr("class", "bar-chart-tooltip");
-
         // Bars
         svg.selectAll("mybar")
             .data(arrayData)
@@ -92,21 +86,14 @@ export class BarChart {
             .attr("width", xScale.bandwidth())
             .attr("height", d => yAxisHeight - yScale(d.value))
             .attr("class", "bar-chart-bar")
-            .on("mouseover", (event, d) => {
-                tooltip
-                    .style("opacity", 1);
 
-                tooltip.select("span[lang='en']").html(NumberFormatterEN.format(d.value));
-                tooltip.select("span[lang='TR']").html(NumberFormatterTR.format(d.value));
-            })
-            .on("mousemove", (event) => {
-                tooltip
-                    .style("left", (event.offsetX) - 10 + "px")
-                    .style("top", (event.offsetY) - 50 + "px")
-            })
-            .on("mouseleave", () => {
-                tooltip.style("opacity", 0);
-            });
+        svg.selectAll("mytext")
+            .data(arrayData)
+            .join("text")
+            .attr("x", d => xScale(d.bucket))
+            .attr("y", d => yScale(d.value) - X_AXIS_ANNOTATION_REFERENCE_HEIGHT / 10)
+            .text(d => String(d.value))
+            .attr("class", "bar-chart-text");
     }
 }
 

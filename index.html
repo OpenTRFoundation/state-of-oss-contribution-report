@@ -70,7 +70,6 @@
 </div>
 
 <div class="container content">
-
     <h1 class="display-4">
         <span lang="en">State of Open Source Contribution in Turkey</span>
         <span lang="tr">Türkiye'de Açık Kaynağa Katkının Durumu</span>
@@ -449,14 +448,7 @@
             </span>
         </h2>
 
-        <div id="user-signed-up-at-chart">
-            <div style="position: relative;">
-                <div id="user-signed-up-at-chart-tooltip" class="bar-chart-tooltip">
-                    <span lang="en"></span>
-                    <span lang="tr"></span>
-                </div>
-            </div>
-        </div>
+        <div id="user-signed-up-at-chart"></div>
 
         <div>
             <h3>
@@ -1253,11 +1245,95 @@
 
     <div>
         <h1 class="display-6 section-header">
+            <span lang="en">7. OSS Contributor Companies</span>
+            <span lang="tr">7. Açık kaynağa katkıda bulunan şirketler</span>
+        </h1>
+        <p class="lead">
             <span lang="en">
-                7. Take aways
+                This section gives an overview of the companies that contribute to open source from Turkey.
             </span>
             <span lang="tr">
-                7. Görüşler
+                Bu bölüm, Türkiye'den açık kaynağa katkıda bulunan şirketlere bir genel bakış sunmaktadır.
+            </span>
+        </p>
+
+        <div>
+            <h2>
+                <span lang="en">OSS contributors companies in Turkey</span>
+                <span lang="tr">Türkiye'de açık kaynağa katkıda bulunan şirketler</span>
+            </h2>
+
+            <!-- TODO: rename to info-->
+            <div id="company-oss-contributor-count-table-container">
+                <table id="company-oss-contributor-count-table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <span lang="en">Company</span>
+                            <span lang="tr">Şirket</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">OSS Contributor Count</span>
+                            <span lang="tr">Açık kaynağa katkı veren kişi sayısı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Sum of scores</span>
+                            <span lang="tr">Skor toplamı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Most contributed organizations</span>
+                            <span lang="tr">En çok katkıda bulunduğu organizasyonlar</span>
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="mt-3">
+                <h3>
+                    <span lang="en">Summary</span>
+                    <span lang="tr">Özet</span>
+                </h3>
+                <p class="lead">
+                    <span lang="en">
+                        There are only a few companies that have more than 1 contributor to open source projects. Furthermore, out of those companies, there are only a handful of companies that contribute to organizations that they don't own.
+                    </span>
+                    <span lang="tr">
+                        Açık kaynak projelere birden fazla katkıda bulunan kişi çalıştıran şirket sayısı oldukça az. Dahası, bu şirketlerin içinde, sadece kendi organizasyonlarına katkıda bulunmayan şirketlerin sayısı da parmakla sayılacak kadar az.
+                    </span>
+                </p>
+                <p class="lead">
+                    <span lang="en">
+                        Score calculation is not taking the project's popularity into account. It is simply the sum of the scores of the contributors of the company.
+                    </span>
+                    <span lang="tr">
+                        Skor hesaplaması, projenin popülaritesini dikkate almıyor. Sadece şirketin katkıda bulunan kişilerinin skorlarının toplamı.
+                    </span>
+                </p>
+            </div>
+
+            <h2>
+                <span lang="en">Companies by contributor count and score</span>
+                <span lang="tr">Katkıda bulunan kişi sayısına ve skoruna göre şirketler</span>
+            </h2>
+
+            <div class="row">
+                <div id="company-oss-contributor-count-chart" class="col-xl-6"></div>
+                <div id="company-oss-contributor-score-chart" class="col-xl-6"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">
+                8. Take aways
+            </span>
+            <span lang="tr">
+                8. Görüşler
             </span>
         </h1>
         <p class="lead">
@@ -1369,18 +1445,20 @@
                 <li>
                     <strong>
                         <span lang="en">
-                            Set Your Location on GitHub
+                            Set Your Location and Company on GitHub
                         </span>
                         <span lang="tr">
-                            GitHub'ta Konumunuzu Ayarlayın
+                            GitHub'ta Konumunuzu ve Şirketiniz Girin
                         </span>
                     </strong>
                     <p>
                         <span lang="en">
                             Make your presence known! Set your location on GitHub to Turkey or your province.
+                            Also make sure to update your company name on your GitHub profile.
                         </span>
                         <span lang="tr">
-                            Varlığınızı bilinir hale getirin! GitHub'ta konumunuzu Türkiye'ye veya ilinize ayarlayın.
+                            Varlığınızı bilinir hale getirin! GitHub'ta konumunuzu Türkiye veya ilinize ayarlayın.
+                            Ayrıca GitHub profilinizde şirket adınızı güncellediğinizden emin olun.
                         </span>
                     </p>
                 </li>

@@ -111,30 +111,37 @@ footer {
   fill: #178acf;
 }
 
-#oss-contributors-table-container {
+#oss-contributors-table-container, #company-oss-contributor-count-table-container {
   max-height: 50rem;
   overflow-y: scroll;
+}
+
+.bar-chart{
+  .tick{
+    font-size: 1rem;
+  }
 }
 
 .bar-chart-bar{
   fill: #6baed6;
 }
 
-.bar-chart-tooltip{
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px 1px #000;
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  pointer-events: none;
-}
-
-#user-signed-up-at-chart{
+.lollipop-chart{
   .tick{
     font-size: 1rem;
   }
+}
+
+.lollipop-chart-circle{
+  fill: #6baed6;
+  stroke: #000;
+}
+
+.lollipop-chart-line{
+  stroke: #000;
+}
+
+.lollipop-chart-text, .bar-chart-text{
+  fill: #000;
+  font-size: 1rem;
 }
