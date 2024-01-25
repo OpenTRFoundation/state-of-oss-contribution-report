@@ -2,13 +2,22 @@ import "./style.scss";
 
 import d3 from "d3";
 
-const REPORT_DATA_REF = "2024-01";
+const REPORT_DATA_REF = "main";
+
+// TODO: additional graphs:
+// - Top focus orgs and repos that people from TR contribute to
+// - Languages of top focus orgs and repos that people from TR contribute to
+// - Top languages of OSS contribution repos
+// - # of focus orgs that people from TR contribute to (5 people contribute to 10+ focus orgs, 10 people contribute to 5-10 focus orgs, 100 people contribute to 1-5 focus orgs)
 
 import {BubbleMap} from "./bubbleMap";
 import {NumberFormatterEN, NumberFormatterTR} from "./common";
 import {LollipopChart} from "./lollipopChart";
 import {WordCloud} from "./wordCloud";
 import {BarChart} from "./barChart";
+
+const OTHER_COMPANY = "-Other-";
+const UNKNOWN_COMPANY = "-Unknown-";
 
 type OssContributor = {
     profile:{
@@ -18,15 +27,24 @@ type OssContributor = {
         province:string;
     };
     // TODO: there's more info availabile here
+    contributionDiversityMultiplier:number;
+    contributedFocusOrgCount:number;
+    sumOfScores:number;
     score:number;
     contributionScoresPerRepository:{ [repoNameWithOwner:string]:number };
 }
 
 interface CompanyInformation {
     name:string;
+    contributionScoresPerRepository:{[repoNameWithOwner:string]:number};
+    sumOfUserScores:number;
+    score:number;
+
     numberOfUsers:number;
-    sumOfScores:number;
-    contributionScoresPerRepository:{ [repoNameWithOwner:string]:number };
+    userDiversityMultiplier:number;
+
+    contributedFocusOrgCount:number;
+    contributionDiversityMultiplier:number;
 }
 
 let focusOrgs:{ [name:string]:number };
@@ -60,7 +78,7 @@ async function main() {
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/230-oss-contributor-province-counts-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/240-user-signed-up-at-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/320-oss-contributor-leader-board.json`),
-        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/330-company-oss-contribution-information-map.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/330-company-oss-contribution-leader-board.json`),
     ]).then((
         [
             _focusOrgs,
@@ -113,6 +131,9 @@ function renderUserCountVisualizations() {
 
     // update the oss contributors table
     updateOssContributorsTable();
+
+    const totalOssContributorCount = Object.values(ossContributorCounts).reduce((a, b) => a + b, 0);
+    jQuery(".oss-contributor-count").html(String(totalOssContributorCount));
 }
 
 function renderFocusOrgsAndRepoVisualizations() {
@@ -170,9 +191,9 @@ function drawFocusOrgWordCloud() {
     // get top N focus orgs
     let topFocusOrgs = Object.entries(focusOrgs)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 50)
+        .slice(0, 100)
         .reduce((obj, [key, value]) => (
-            Object.assign(obj, {[key]: Math.sqrt(value) * 4})
+            Object.assign(obj, {[key]: Math.sqrt(value) / 10})
         ), {});
 
 
@@ -185,7 +206,7 @@ function drawFocusRepositoryWordCloud() {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 50)
         .reduce((obj, [key, value]) => (
-            Object.assign(obj, {[key]: Math.log2(value) * 2})
+            Object.assign(obj, {[key]: Math.log2(value) * 3})
         ), {});
 
 
@@ -203,6 +224,9 @@ function updateOssContributorsTable() {
                 ossContributor.profile.username,
                 ossContributor.profile.name,
                 ossContributor.profile.company,
+                ossContributor.sumOfScores,
+                ossContributor.contributedFocusOrgCount,
+                ossContributor.contributionDiversityMultiplier,
                 ossContributor.score,
                 mostContributedOrgs(ossContributor.contributionScoresPerRepository, 5),
             ];
@@ -229,35 +253,40 @@ function updateOssContributorsTable() {
 function renderCompanyVisualizations() {
     // first, build a map to group minor contributors under "-Other-" company
     const groupedMap:{ [company:string]:CompanyInformation } = {
-        // TODO: no hardcoding
-        "-Other-": {
-            name: "-Other-",
-            numberOfUsers: 0,
-            sumOfScores: 0,
+        [OTHER_COMPANY]: {
+            name: OTHER_COMPANY,
             contributionScoresPerRepository: {},
+            sumOfUserScores: 0,
+            score: 0,
+
+            numberOfUsers: 0,
+            userDiversityMultiplier: 1,
+
+            contributedFocusOrgCount: 1,
+            contributionDiversityMultiplier: 1,
         }
     };
     for (const companyInformation of Object.values(companyOssContribution)) {
         if (companyInformation.numberOfUsers > 1) {
             groupedMap[companyInformation.name] = companyInformation;
         } else {
-            groupedMap["-Other-"].numberOfUsers += companyInformation.numberOfUsers;
-            groupedMap["-Other-"].sumOfScores += companyInformation.sumOfScores;
+            groupedMap[OTHER_COMPANY].numberOfUsers += companyInformation.numberOfUsers;
+            groupedMap[OTHER_COMPANY].score += companyInformation.score;
             for (const repo in companyInformation.contributionScoresPerRepository) {
-                if (!groupedMap["-Other-"].contributionScoresPerRepository[repo]) {
-                    groupedMap["-Other-"].contributionScoresPerRepository[repo] = 0;
+                if (!groupedMap[OTHER_COMPANY].contributionScoresPerRepository[repo]) {
+                    groupedMap[OTHER_COMPANY].contributionScoresPerRepository[repo] = 0;
                 }
-                groupedMap["-Other-"].contributionScoresPerRepository[repo] += companyInformation.contributionScoresPerRepository[repo];
+                groupedMap[OTHER_COMPANY].contributionScoresPerRepository[repo] += companyInformation.contributionScoresPerRepository[repo];
             }
         }
     }
 
     let groupedCompanies = Object.values(groupedMap);
     groupedCompanies.sort(function (a, b) {
-        if (a.sumOfScores == b.sumOfScores) {
+        if (a.score == b.score) {
             return a.name.localeCompare(b.name);
         }
-        return b.sumOfScores - a.sumOfScores;
+        return b.score - a.score;
     });
 
     // update the company oss contributor count tables
@@ -274,8 +303,12 @@ function renderCompanyVisualizations() {
             return [
                 index++,
                 d.name,
+                d.sumOfUserScores,
                 d.numberOfUsers,
-                d.sumOfScores,
+                d.userDiversityMultiplier,
+                d.contributedFocusOrgCount,
+                d.contributionDiversityMultiplier,
+                d.score,
                 mostContributedOrgs(d.contributionScoresPerRepository, 5),
             ];
         })
@@ -292,8 +325,15 @@ function renderCompanyVisualizations() {
 
     const companyOssContributorScoreData:{ [company:string]:number } = {};
     for (const companyInformation of groupedCompanies) {
-        companyOssContributorScoreData[companyInformation.name] = companyInformation.sumOfScores;
+        companyOssContributorScoreData[companyInformation.name] = companyInformation.score;
     }
+
+    delete companyOssCountributorCountData[OTHER_COMPANY];
+    delete companyOssCountributorCountData[UNKNOWN_COMPANY];
+    delete companyOssContributorScoreData[OTHER_COMPANY];
+    delete companyOssContributorScoreData[UNKNOWN_COMPANY];
+
+    // TODO: only show top N
 
     new LollipopChart("#company-oss-contributor-count-chart", companyOssCountributorCountData).draw();
     new LollipopChart("#company-oss-contributor-score-chart", companyOssContributorScoreData).draw();

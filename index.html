@@ -15,6 +15,13 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.7/d3.layout.cloud.min.js" crossorigin="anonymous"></script>
+<script>
+    MathJax = {
+        tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]},
+        svg: {fontCache: 'global'}
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" crossorigin="anonymous"></script>
 
 <div class="container">
 
@@ -208,6 +215,7 @@
             </span>
         </p>
 
+        <!-- TODO: convert the following this div to a template, as it is duplicated in 2 other places -->
         <div>
             <h2>
                 <span lang="en">Number of GitHub users with a location somewhere in Turkey</span>
@@ -812,10 +820,10 @@
         </p>
         <p class="lead">
             <span lang="en">
-                We only show the top 50 organizations the following word cloud.
+                We only show the top 100 organizations the following word cloud.
             </span>
             <span lang="tr">
-                Aşağıdaki word cloud'da sadece ilk 50 organizasyonu gösteriyoruz.
+                Aşağıdaki word cloud'da sadece ilk 100 organizasyonu gösteriyoruz.
             </span>
         </p>
         <div id="focus-orgs-word-cloud">
@@ -1142,6 +1150,18 @@
                             <span lang="tr">Şirket</span>
                         </th>
                         <th scope="col">
+                            <span lang="en">Sum of scores</span>
+                            <span lang="tr">Skor toplamı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en"># of contributed focus orgs</span>
+                            <span lang="tr">Katkı yapılan odak organizasyonlar</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Contribution diversity multiplier</span>
+                            <span lang="tr">Katkı çeşitliliği çarpanı</span>
+                        </th>
+                        <th scope="col">
                             <span lang="en">Score</span>
                             <span lang="tr">Skor</span>
                         </th>
@@ -1162,10 +1182,10 @@
             </h3>
             <p class="lead">
                 <span lang="en">
-                    According to the criteria mentioned below, there are ~500 open source contributors from Turkey who made contributions in the last 90 days.
+                    According to the criteria mentioned below, there are <span class="oss-contributor-count">N</span> open source contributors from Turkey who made contributions in the last 90 days.
                 </span>
                 <span lang="tr">
-                    Aşağıda belirtilen kriterlere göre, son 90 günde bir katkı yapmış ~500 Türkiye'den açık kaynak katkıda bulunan kişi var.
+                    Aşağıda belirtilen kriterlere göre, son 90 günde bir katkı yapan Türkiye'den açık kaynak katkıda bulunan <span class="oss-contributor-count">N</span> kişi var.
                 </span>
             </p>
             <p class="lead">
@@ -1186,16 +1206,38 @@
             </p>
             <p class="lead">
                 <span lang="en">
-                    Scoring calculation is not taking the project's popularity into account.
-                    For example, a pull request to Linux kernel is counted as 10 points, while a pull request to a small project is also counted as 10 points.
-                    This can be improved in the future.
+                    Scoring calculation is taking multiple factors into account.
                 </span>
                 <span lang="tr">
-                    Skor hesaplaması, projenin popülaritesini dikkate almıyor.
-                    Örneğin, Linux kernel'e yapılan bir pull request 10 puan olarak sayılırken, küçük bir projeye yapılan bir pull request de 10 puan olarak sayılıyor.
-                    Bu ileride geliştirilebilir.
+                    Skor hesaplaması, birden fazla faktörü dikkate alıyor.
                 </span>
             </p>
+            <ul class="lead">
+                <li>
+                    <span lang="en">
+                        Project's score, based on its popularity (stars), pull requests, issues, forks, etc.
+                    </span>
+                    <span lang="tr">
+                        Projenin popülerliğine (star), pull request'lerine, issue'larına, fork'larına vb. dayanan proje skoru
+                    </span>
+                </li>
+                <li>
+                    <span lang="en">
+                        User's activity type based on a system that gives higher score for creating pull requests and pull request reviews compared to creating commits or issues
+                    </span>
+                    <span lang="tr">
+                        Commit veya issue oluşturmaya kıyasla pull request veya pull request review oluşturmaya daha yüksek skor veren bir sistemde kullanıcının aktivite türü
+                    </span>
+                </li>
+                <li>
+                    <span lang="en">
+                        Diversity of organizations user contributed to
+                    </span>
+                    <span lang="tr">
+                        Kullanıcının katkıda bulunduğu organizasyonların çeşitliliği
+                    </span>
+                </li>
+            </ul>
         </div>
 
         <div>
@@ -1213,40 +1255,181 @@
                     <span lang="tr">Kullanıcının son 90 günde bir odak repository'ye veya odak organizasyonun altındaki bir repository'ye katkısı olmuştur.</span>
                 </li>
                 <li>
-                    <span lang="en">User had a score of minimum 20 based on following scoring system:</span>
+                    <span lang="en">User had a score of minimum 20 based on the scoring system explained later.</span>
                     <span lang="tr">
-                        Kullanıcının aşağıdaki skorlama sistemine göre minimum 20 skoru vardır:
+                        Kullanıcının aşağıda açıklanan skorlama sistemine göre minimum 20 skoru vardır.
                     </span>
-                </li>
-                <li>
-                    <ul>
-                        <li>
-                            <span lang="en">Pull request: 10 points</span>
-                            <span lang="tr">Pull request: 10 puan</span>
-                        </li>
-                        <li>
-                            <span lang="en">Pull request review: 5 points</span>
-                            <span lang="tr">Pull request review: 5 puan</span>
-                        </li>
-                        <li>
-                            <span lang="en">Commit: 3 point</span>
-                            <span lang="tr">Commit: 3 puan</span>
-                        </li>
-                        <li>
-                            <span lang="en">Issue: 1 points</span>
-                            <span lang="tr">Issue: 1 puan</span>
-                        </li>
-                    </ul>
                 </li>
             </ul>
         </div>
-
     </div>
 
     <div>
         <h1 class="display-6 section-header">
-            <span lang="en">7. OSS Contributor Companies</span>
-            <span lang="tr">7. Açık kaynağa katkıda bulunan şirketler</span>
+            <span lang="en">
+                7. How we calculate the user scores?
+            </span>
+            <span lang="tr">
+                7. Kullanıcı skorlarını nasıl hesaplıyoruz?
+            </span>
+        </h1>
+        <p class="lead">
+            <span lang="en">
+                Finding a good balance between the number of contributions and the quality of contributions is not easy.
+                We believe that the scoring system we came up with is a good balance. It is mostly done with a trial and error approach.
+            </span>
+            <span lang="tr">
+                Katkı sayısı ile katkı kalitesi arasında iyi bir denge bulmak kolay değil.
+                Bulduğumuz skorlama sisteminin iyi bir denge olduğuna inanıyoruz. Bu skor sistemi, çoğunlukla deneme yanılma yaklaşımıyla üretildi.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                In summary, user's score is the normalized sum of scores that are per-repository that's multiplied with a multiplier for contribution diversity.
+            </span>
+            <span lang="tr">
+                Özetle, kullanıcının skoru, repository başına skorların toplamının normalizasyonunun katkı çeşitliliği çarpanıyla çarpılmasıyla elde edilir.
+            </span>
+        </p>
+        <p class="lead">
+            $$ userScore = \sqrt{sumOfScores \times contributionDiversityMultiplier} $$
+        </p>
+        <br/>
+        <p class="lead">
+            <span lang="en">
+                The contribution diversity multiplier, $contributionDiversityMultiplier$, is obtained by finding the number of focus organizations the user contributed to. Since the number can be high, only 25% of its value is used.
+            </span>
+            <span lang="tr">
+                Katkı çeşitliliği çarpanı $contributionDiversityMultiplier$, kullanıcının katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+            </span>
+        </p>
+        <p class="lead">
+            $$ contributionDiveristyMultiplier = 1 + (contributedFocusOrganizationCount \times 25\%) $$
+        </p>
+        <p class="lead">
+            <span lang="en">
+                For example, if a user contributed to 4 focus organizations, the multiplier is $2$. If a user contributed to 16 focus organizations, the multiplier is $5$.
+            </span>
+            <span lang="tr">
+                Örneğin, bir kullanıcı 4 odak organizasyona katkıda bulunduysa, çarpan $2$'dir. Bir kullanıcı 16 odak organizasyona katkıda bulunduysa, çarpan $5$'tir.
+            </span>
+        </p>
+        <br/>
+        <p class="lead">
+            <span lang="en">
+                User's sum of scores, $sumOfScores$, is the sum of scores that are per-repository. The score per repository is calculated by multiplying the user's contribution score for that repository with a multiplier that's based on the repository's score.
+            </span>
+            <span lang="tr">
+                Kullanıcının skor toplamı $sumOfScores$, repository başına skorların toplamıdır. Repository başına skor, kullanıcının o repository için katkı skoru ile repository'nin skoruna dayalı bir çarpanın çarpılmasıyla hesaplanır.
+            </span>
+        </p>
+        <p class="lead">
+            $$ sumOfScores  = \sum (userContribScoreForRepository \times (1 + (repoScore \times 5\%)) $$
+        </p>
+        <br/>
+        <p class="lead">
+            <span lang="en">
+                User's contribution score for a repository, $userContribScoreForRepository$, is calculated by summing the contribution scores for each contribution type for that repository.
+                The contribution score for each contribution type is calculated by multiplying the normalized contribution count with a coefficient that's different for each the contribution type.
+            </span>
+            <span lang="tr">
+                Kullanıcının bir repository için katkı skoru $userContribScoreForRepository$, o repository için her katkı türünde olan katkı skorlarının toplanmasıyla hesaplanır.
+                Her katkı türü için katkı skoru, normalleştirilmiş katkı sayısının, katkı türüne göre farklı olan bir katsayıyla çarpılmasıyla hesaplanır.
+            </span>
+        <p class="lead">
+        <p class="lead">
+            $$ userContribScoreForRepository = \sum (\sqrt{contributionCount} \times contributionTypeCoefficient) $$
+            $$
+            contributionTypeCoefficient=
+            \begin{cases}
+                60, & \text{if Pull Request}\\
+                30, & \text{if Pull Request Review}\\
+                9, & \text{Issue}\\
+                1, & \text{if Commit}\\
+            \end{cases}
+            $$
+        </p>
+        <p class="lead">
+            <span lang="en">
+                For example a user has 100 pull requests for repository A which has a score of 100 and 10000 commits for repository B which has a score of 20.
+                The score for repository A will be $(\sqrt{100} \times 60 \times (1 + (100 \times 5\%)) = 3600$ and
+                the score for repository B will be $(\sqrt{10000} \times 1 \times (1 + (20 \times 5\%)) = 200$.
+                Hence, $sumOfScores$ will be $3800$.
+            </span>
+            <span lang="tr">
+                Örneğin, bir kullanıcının 100 skorlu A repository'si için 100 pull request'i ve 20 skorlu B repository'si için 10000 commit'i var.
+                A repository'si için skor $(\sqrt{100} \times 60 \times (1 + (100 \times 5\%)) = 3600$ ve
+                B repository'si için skor $(\sqrt{10000} \times 1 \times (1 + (20 \times 5\%)) = 200$ olacaktır.
+                Dolayısıyla, $sumOfScores$ $3800$ olacaktır.
+            </span>
+        </p>
+        <p class="lead">
+            <span lang="en">
+                We believe this is a good balance as it gives more weight to pull requests and pull request reviews compared to commits and issues.
+                Also, it gives more weight to repositories that have a higher score.
+            </span>
+            <span lang="tr">
+                Bu hesabın, pull request ve pull request review'lara commit ve issue'lara göre daha fazla ağırlık verdiği için iyi bir denge olduğuna inanıyoruz.
+                Ayrıca, daha yüksek skorlu repository'lere daha fazla ağırlık veriliyor.
+            </span>
+        </p>
+        <br/>
+        <p class="lead">
+            <span lang="en">
+                The repository score, $repoScore$, is calculated by weighted summing the scores for each metric for that repository and then normalizing it.
+                Also, an organization multiplier is applied to the score.
+            </span>
+            <span lang="tr">
+                Repository skoru $repoScore$, o repository için metriklerin ağırlıklı toplanması ve ardından normalleştirilmesiyle hesaplanır.
+                Ayrıca, skora bir organizasyon çarpanı uygulanır.
+            </span>
+        </p>
+        <p class="lead">
+            $$ repoScore = \sqrt{\dfrac{(forks \times 5) + (stars \times 20) + (PRs \times 20) + (issues \times 40) + (watchers \times 10) + (discussions \times 5)}{100}} \times orgMultiplier $$
+        </p>
+        <p class="lead">
+            <span lang="en">
+                As the numbers correlate (e.g. projects with more stars have other metrics higher as well), a normalization is done by square rooting the sum.
+                Also, we want to give more weight to repositories that belong to an established organization.
+                This is mostly the case for open source projects that are in a good shape.
+                This is done by the $orgMultiplier$.
+            </span>
+            <span lang="tr">
+                Sayılar birbiriyle ilişkili olduğundan (örneğin, daha fazla star'a sahip projelerin diğer metrikleri de daha yüksektir), toplamın karekökü alınarak normalleştirme yapılır.
+                Ayrıca, oturmuş bir organizasyona ait olan repository'lere daha fazla ağırlık vermek istiyoruz.
+                Bu durum, çoğunlukla iyi durumda olan açık kaynak projeleri için geçerli.
+                Bu da $orgMultiplier$ ile yapılmakta.
+            </span>
+        </p>
+        <br/>
+        <p class="lead">
+            <span lang="en">
+                The organization multiplier, $orgMultiplier$, is calculated by finding the number of repositories of an organization that passed the criteria to
+                be matched as a focus repository candidate.
+            </span>
+            <span lang="tr">
+                Organizasyon çarpanı $orgMultiplier$, bir organizasyonun odak repository adayı kriterlerini geçen repository sayısının bulunmasıyla hesaplanır.
+            </span>
+        </p>
+        <p class="lead">
+            $$ orgMultiplier = 1 + (\sqrt{numberOfMatchedRepositoriesInOrg} \times 1\%) $$
+        </p>
+        <p class="lead">
+            <span lang="en">
+                If the organization has 16 repositories that passed the criteria, the multiplier is $1.04$.
+                If the organization has 256 repositories that passed the criteria, the multiplier is $1.16$.
+            </span>
+            <span lang="tr">
+                Eğer organizasyonun kriterleri geçen 16 repository'si varsa, çarpan $1.04$'tür.
+                Eğer organizasyonun kriterleri geçen 256 repository'si varsa, çarpan $1.16$'dır.
+            </span>
+        </p>
+    </div>
+
+    <div>
+        <h1 class="display-6 section-header">
+            <span lang="en">8. OSS Contributor Companies</span>
+            <span lang="tr">8. Açık kaynağa katkıda bulunan şirketler</span>
         </h1>
         <p class="lead">
             <span lang="en">
@@ -1274,8 +1457,24 @@
                             <span lang="tr">Şirket</span>
                         </th>
                         <th scope="col">
+                            <span lang="en">Sum of user scores</span>
+                            <span lang="tr">Kullanıcıların skor toplamı</span>
+                        </th>
+                        <th scope="col">
                             <span lang="en">OSS Contributor Count</span>
                             <span lang="tr">Açık kaynağa katkı veren kişi sayısı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">User diversity multiplier</span>
+                            <span lang="tr">Kullanıcı çeşitlilik çarpanı</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en"># of contributed focus organizations</span>
+                            <span lang="tr">Katkı yapılan odak organizasyonlar</span>
+                        </th>
+                        <th scope="col">
+                            <span lang="en">Contribution diversity multiplier</span>
+                            <span lang="tr">Katkı çeşitliliği çarpanı</span>
                         </th>
                         <th scope="col">
                             <span lang="en">Sum of scores</span>
@@ -1297,20 +1496,62 @@
                 </h3>
                 <p class="lead">
                     <span lang="en">
-                        There are only a few companies that have more than 1 contributor to open source projects. Furthermore, out of those companies, there are only a handful of companies that contribute to organizations that they don't own.
+                        There are only a few companies that have more than 2 contributors to open source projects. Furthermore, out of those companies, there are only a handful of companies that contribute to organizations that they don't own.
                     </span>
                     <span lang="tr">
-                        Açık kaynak projelere birden fazla katkıda bulunan kişi çalıştıran şirket sayısı oldukça az. Dahası, bu şirketlerin içinde, sadece kendi organizasyonlarına katkıda bulunmayan şirketlerin sayısı da parmakla sayılacak kadar az.
+                        Açık kaynak projelere 2 kişiden fazla katkıda bulunan kişi çalıştıran şirket sayısı oldukça az. Dahası, bu şirketlerin içinde, sadece kendi organizasyonlarına katkıda bulunmayan şirketlerin sayısı da parmakla sayılacak kadar az.
                     </span>
                 </p>
-                <p class="lead">
-                    <span lang="en">
-                        Score calculation is not taking the project's popularity into account. It is simply the sum of the scores of the contributors of the company.
-                    </span>
-                    <span lang="tr">
-                        Skor hesaplaması, projenin popülaritesini dikkate almıyor. Sadece şirketin katkıda bulunan kişilerinin skorlarının toplamı.
-                    </span>
-                </p>
+                <div>
+                    <h3>
+                        <span lang="en">Score calculation</span>
+                        <span lang="tr">Skor hesaplama</span>
+                    </h3>
+                    <p class="lead">
+                        <span lang="en">
+                            Company score is the sum of scores of users from that company with a few multipliers applied.
+                        </span>
+                        <span lang="tr">
+                            Şirket skoru, o şirketten gelen kullanıcıların skorlarının birkaç çarpanın uygulanmasıyla elde edilir.
+                        </span>
+                    </p>
+                    <p class="lead">
+                        $$ $score = sumOfScores \times userDiversityMultiplier \times contributionDiversityMultiplier $$
+                    </p>
+                    <p class="lead">
+                        <span lang="en">
+                            The user diversity multiplier, $userDiversityMultiplier$, is obtained by finding the number of oss contributors from that company. Since the number can be high, only 25% of its value is used.
+                        </span>
+                        <span lang="tr">
+                            Kullanıcı çeşitliliği çarpanı $userDiversityMultiplier$, o şirketten gelen açık kaynağa katkı yapanların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                        </span>
+                    </p>
+                    <p class="lead">
+                        $$ userDiversityMultiplier = 1 + (contributorCount \times 25\%) $$
+                    </p>
+                    <p class="lead">
+                        <span lang="en">
+                            Likewise, the contribution diversity multiplier, $contributionDiversityMultiplier$, is obtained by finding the number of focus organizations the company contributed to. Again, since the number can be high, only 25% of its value is used.
+                        </span>
+                        <span lang="tr">
+                            Benzer şekilde, katkı çeşitliliği çarpanı $contributionDiversityMultiplier$, şirketin katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Yine, bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                        </span>
+                    </p>
+                    <p class="lead">
+                        $$ contributionDiversityMultiplier = 1 + (contributedFocusOrgs \times 25\%) $$
+                    </p>
+                    <p class="lead">
+                        <span lang="en">
+                            Finally, the sum of scores, $sumOfScores$, is the sum of scores of OSS contributors from that company.
+                        </span>
+                        <span lang="tr">
+                            Son olarak, skor toplamı $sumOfScores$, o şirketten gelen açık kaynağa katkıda bulunanların skorlarının toplamıdır.
+                        </span>
+                    </p>
+                    <p class="lead">
+                        $$ sumOfUserScores = \sum userScore $$
+                    </p>
+                </div>
             </div>
 
             <h2>
@@ -1330,158 +1571,152 @@
     <div>
         <h1 class="display-6 section-header">
             <span lang="en">
-                8. Take aways
+                9. Take aways
             </span>
             <span lang="tr">
-                8. Görüşler
+                9. Görüşler
             </span>
         </h1>
-        <p class="lead">
-            <ul class="lead" style="list-style: decimal;">
-                <li>
-                    <strong>
-                        <span lang="en">
-                            Contribute to Focus Projects
-                        </span>
-                        <span lang="tr">
-                            Odak Projelere Katkıda Bulunun
-                        </span>
-                    </strong>
-                    <p>
-                        <span lang="en">
-                            Change the "I open sourced my project" mindset to "I contribute to open source projects".
-                        </span>
-                        <span lang="tr">
-                            "Projemin kaynağını açtım" düşüncesini "açık kaynak projelere katkıda bulunuyorum" düşüncesiyle değiştirin.
-                        </span>
-                    </p>
-                    <p>
-                        <span lang="en">
-                            Be part of something big!
-                            Contribute to open source projects and gain valuable experience.
-                            Seek mentorship, read <a href="https://opentr.foundation/docs/">OpenTR's guides</a>, and join <a href="https://opentr.foundation/contact/">OpenTR community</a> for support and guidance.
-                            Encourage your company to contribute to these projects and make a positive impact.
-                        </span>
-                        <span lang="tr">
-                            Büyük bir şeyin parçası olun!
-                            Açık kaynak projelerine katkıda bulunun ve deneyim kazanın.
-                            Mentorluk arayın, <a href="https://opentr.foundation/docs/">OpenTR rehberlerini</a> okuyun ve destek ile rehberlik için <a href="https://opentr.foundation/contact/">OpenTR topluluğuna</a> katılın.
-                            Şirketinizi bu projelere katkıda bulunmaya teşvik edin ve olumlu bir etki yaratın.
-                        </span>
-                    </p>
-                    <p>
-                        <strong>
+        <ul class="lead" style="list-style: decimal;">
+            <li>
+                <strong>
+                    <span lang="en">
+                        Contribute to Focus Projects
+                    </span>
+                    <span lang="tr">
+                        Odak Projelere Katkıda Bulunun
+                    </span>
+                </strong>
+                <p>
+                    <span lang="en">
+                        Change the "I open sourced my project" mindset to "I contribute to open source projects".
+                    </span>
+                    <span lang="tr">
+                        "Projemin kaynağını açtım" düşüncesini "açık kaynak projelere katkıda bulunuyorum" düşüncesiyle değiştirin.
+                    </span>
+                </p>
+                <p>
+                    <span lang="en">
+                        Be part of something big!
+                        Contribute to open source projects and gain valuable experience.
+                        Seek mentorship, read <a href="https://opentr.foundation/docs/">OpenTR's guides</a>, and join <a href="https://opentr.foundation/contact/">OpenTR community</a> for support and guidance.
+                        Encourage your company to contribute to these projects and make a positive impact.
+                    </span>
+                    <span lang="tr">
+                        Büyük bir şeyin parçası olun!
+                        Açık kaynak projelerine katkıda bulunun ve deneyim kazanın.
+                        Mentorluk arayın, <a href="https://opentr.foundation/docs/">OpenTR rehberlerini</a> okuyun ve destek ile rehberlik için <a href="https://opentr.foundation/contact/">OpenTR topluluğuna</a> katılın.
+                        Şirketinizi bu projelere katkıda bulunmaya teşvik edin ve olumlu bir etki yaratın.
+                    </span>
+                </p>
+                <strong>
                             <span lang="en">
                                 Why you should do that?
                             </span>
-                            <span lang="tr">
+                    <span lang="tr">
                                 Neden bunu yapmalısınız?
                             </span>
-                        </strong>
-                        <ul>
-                            <li>
-                                <span lang="en">Improve your career by enhancing your skills and visibility globally.</span>
-                                <span lang="tr">
-                                    Becerilerinizi geliştirerek ve küresel olarak görünürlüğünüzü artırarak kariyerinizi ilerletin.
-                                </span>
-                            </li>
-                            <li>
-                                <span lang="en">Help your company by contributing to your company's growth via impactful open source projects.</span>
-                                <span lang="tr">
-                                    Etkili açık kaynak projeleri aracılığıyla şirketinizin büyümesine katkıda bulunarak şirketinize yardımcı olun.
-                                </span>
-                            </li>
-                            <li>
-                                <span lang="en">Help Turkey's software industry by being a driving force in advancing it.</span>
-                                <span lang="tr">
-                                    Türkiye'nin yazılım endüstrisinin ilerlemesine yardımcı olun.
-                                </span>
-                            </li>
-                            <li>
-                                <span lang="en">Help projects you use by giving back to the projects that you rely on.</span>
-                                <span lang="tr">
-                                    Kullandığınız projelere geri verimde bulunarak yardımcı olun.
-                                </span>
-                            </li>
-                        </ul>
-                    </p>
-                    <p>
-                        <strong>
-                            <span lang="en">
-                                Why your company should do that?
+                </strong>
+                <ul>
+                    <li>
+                        <span lang="en">Improve your career by enhancing your skills and visibility globally.</span>
+                        <span lang="tr">
+                                Becerilerinizi geliştirerek ve küresel olarak görünürlüğünüzü artırarak kariyerinizi ilerletin.
                             </span>
-                            <span lang="tr">
-                                Neden şirketiniz de bunu yapmalı?
+                    </li>
+                    <li>
+                        <span lang="en">Help your company by contributing to your company's growth via impactful open source projects.</span>
+                        <span lang="tr">
+                                Etkili açık kaynak projeleri aracılığıyla şirketinizin büyümesine katkıda bulunarak şirketinize yardımcı olun.
                             </span>
-                        </strong>
-                        <ul>
-                            <li>
-                                <span lang="en">
-                                    Improve your company's brand by showing commitment to community and innovation.
-                                </span>
-                                <span lang="tr">
-                                    Şirketinizin topluluklara ve innovasyona olan bağlılığını göstererek, şirketinizin markasını geliştirin.
-                                </span>
-                            </li>
-                            <li>
-                                <span lang="en">
-                                    Improve your company's hiring by attracting top talent via making a name in open source.
-                                </span>
-                                <span lang="tr">
-                                    Açık kaynakta adınızı duyurun ve en iyi yetenekleri çekerek şirketinizin işe alımını geliştirin.
-                                </span>
-                            </li>
-                            <li>
-                                <span lang="en">
-                                    Improve your company's products by enhancing them through collaborative, community-driven development.
-                                </span>
-                                <span lang="tr">
-                                    İş birliği ve topluluk odaklı geliştirme ile şirketinizin ürünlerinizi iyileştirin.
-                                </span>
-                            </li>
-                        </ul>
-                    </p>
-                </li>
-                <li>
-                    <strong>
+                    </li>
+                    <li>
+                        <span lang="en">Help Turkey's software industry by being a driving force in advancing it.</span>
+                        <span lang="tr">
+                                Türkiye'nin yazılım endüstrisinin ilerlemesine yardımcı olun.
+                            </span>
+                    </li>
+                    <li>
+                        <span lang="en">Help projects you use by giving back to the projects that you rely on.</span>
+                        <span lang="tr">
+                                Kullandığınız projelere geri verimde bulunarak yardımcı olun.
+                            </span>
+                    </li>
+                </ul>
+                <strong>
+                    <span lang="en">
+                        Why your company should do that?
+                    </span>
+                    <span lang="tr">
+                        Neden şirketiniz de bunu yapmalı?
+                    </span>
+                </strong>
+                <ul>
+                    <li>
                         <span lang="en">
-                            Set Your Location and Company on GitHub
+                            Improve your company's brand by showing commitment to community and innovation.
                         </span>
                         <span lang="tr">
-                            GitHub'ta Konumunuzu ve Şirketiniz Girin
+                            Şirketinizin topluluklara ve innovasyona olan bağlılığını göstererek, şirketinizin markasını geliştirin.
                         </span>
-                    </strong>
-                    <p>
+                    </li>
+                    <li>
                         <span lang="en">
-                            Make your presence known! Set your location on GitHub to Turkey or your province.
-                            Also make sure to update your company name on your GitHub profile.
+                            Improve your company's hiring by attracting top talent via making a name in open source.
                         </span>
                         <span lang="tr">
-                            Varlığınızı bilinir hale getirin! GitHub'ta konumunuzu Türkiye veya ilinize ayarlayın.
-                            Ayrıca GitHub profilinizde şirket adınızı güncellediğinizden emin olun.
+                            Açık kaynakta adınızı duyurun ve en iyi yetenekleri çekerek şirketinizin işe alımını geliştirin.
                         </span>
-                    </p>
-                </li>
-                <li>
-                    <strong>
+                    </li>
+                    <li>
                         <span lang="en">
-                            Find out more
+                            Improve your company's products by enhancing them through collaborative, community-driven development.
                         </span>
                         <span lang="tr">
-                            Daha fazlasını öğrenin
+                            İş birliği ve topluluk odaklı geliştirme ile şirketinizin ürünlerinizi iyileştirin.
                         </span>
-                    </strong>
-                    <p>
-                        <span lang="en">
-                            Check out <a href="https://opentr.foundation/">OpenTR's website</a> to learn more about OpenTR, open source and how you can contribute to open source.
-                        </span>
-                        <span lang="tr">
-                            Açık kaynak hakkında, açık kaynağa nasıl katkıda bulunabileceğiniz hakkında ve OpenTR ile ilgili daha fazla bilgi edinmek için <a href="https://opentr.foundation/">OpenTR'nin web sitesini</a> ziyaret edin.
-                        </span>
-                    </p>
-                </li>
-            </ul>
-        </p>
+                    </li>
+                </ul>
+            </li>
+            <li class="mt-2">
+                <strong>
+                    <span lang="en">
+                        Set Your Location and Company on GitHub
+                    </span>
+                    <span lang="tr">
+                        GitHub'ta Konumunuzu ve Şirketiniz Girin
+                    </span>
+                </strong>
+                <p>
+                    <span lang="en">
+                        Make your presence known! Set your location on GitHub to Turkey or your province.
+                        Also make sure to update your company name on your GitHub profile.
+                    </span>
+                    <span lang="tr">
+                        Varlığınızı bilinir hale getirin! GitHub'ta konumunuzu Türkiye veya ilinize ayarlayın.
+                        Ayrıca GitHub profilinizde şirket adınızı güncellediğinizden emin olun.
+                    </span>
+                </p>
+            </li>
+            <li>
+                <strong>
+                    <span lang="en">
+                        Find out more
+                    </span>
+                    <span lang="tr">
+                        Daha fazlasını öğrenin
+                    </span>
+                </strong>
+                <p>
+                    <span lang="en">
+                        Check out <a href="https://opentr.foundation/">OpenTR's website</a> to learn more about OpenTR, open source and how you can contribute to open source.
+                    </span>
+                    <span lang="tr">
+                        Açık kaynak hakkında, açık kaynağa nasıl katkıda bulunabileceğiniz hakkında ve OpenTR ile ilgili daha fazla bilgi edinmek için <a href="https://opentr.foundation/">OpenTR'nin web sitesini</a> ziyaret edin.
+                    </span>
+                </p>
+            </li>
+        </ul>
     </div>
 
 </div>
