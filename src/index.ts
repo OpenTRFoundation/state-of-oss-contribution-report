@@ -245,9 +245,23 @@ function updateOssContributorsTable() {
         })
         .enter()
         .append("td")
-        .text(function (d) {
-            return <any>d;
-        })
+        .html(function (d, index) {
+            switch (index) {
+                case 1: {
+                    return `<a class="link-dark" href="https://github.com/${d}" target="_blank">@${d}</a>`;
+                }
+                case 8: {
+                    // convert array to links
+                    const links = (<string[]>d).map(function (org:string) {
+                        return `<a class="link-dark" href="https://github.com/${org}" target="_blank">${org}</a>`
+                    });
+                    return links.join(", ");
+                }
+                default: {
+                    return <any>d;
+                }
+            }
+        });
 }
 
 function renderCompanyVisualizations() {
@@ -314,9 +328,20 @@ function renderCompanyVisualizations() {
         })
         .enter()
         .append("td")
-        .text(function (d) {
-            return <any>d;
-        })
+        .html(function (d, index) {
+            switch (index) {
+                case 8: {
+                    // convert array to links
+                    const links = (<string[]>d).map(function (org:string) {
+                        return `<a class="link-dark" href="https://github.com/${org}" target="_blank">${org}</a>`
+                    });
+                    return links.join(", ");
+                }
+                default: {
+                    return <any>d;
+                }
+            }
+        });
 
     const companyOssCountributorCountData:{ [company:string]:number } = {};
     for (const companyInformation of groupedCompanies) {
@@ -353,7 +378,7 @@ function mostContributedOrgs(contributionScoresPerRepository:{ [repoNameWithOwne
     const sorted = Array.from(map.entries()).sort((a, b) => b[1] - a[1]);
 
     // return the top N
-    return sorted.slice(0, limit).map(([name, _]) => `${name}`).join(", ");
+    return sorted.slice(0, limit).map(([name, _]) => `${name}`);
 }
 
 function localize(language:string) {
