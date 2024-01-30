@@ -55,6 +55,11 @@ let ossContributorCounts:{ [province:string]:number };
 let userSignedUpAt:{ [date:string]:number };
 let ossContributors:OssContributor[];
 let companyOssContribution:{ [company:string]:CompanyInformation };
+let contributedFocusOrganizations:{ [company:string]:{score:number; contributors:number; companies:string[];}};
+
+// TODO: use
+let contributedFocusProjectPrimaryLanguages:{ [language:string]:number };
+let weightedContributedFocusProjectLanguages:{ [language:string]:number };
 
 async function main() {
     const browserLanguage = getUserLanguage();
@@ -79,6 +84,9 @@ async function main() {
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/240-user-signed-up-at-map.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/320-oss-contributor-leader-board.json`),
         d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/330-company-oss-contribution-leader-board.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/400-contributed-focus-organization-contribution-map.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/500-contributed-focus-project-primary-language-map.json`),
+        d3.json(`https://raw.githubusercontent.com/OpenTRFoundation/state-of-oss-contribution/${REPORT_DATA_REF}/990-report-data/510-weighted-contributed-focus-project-language-map.json`),
     ]).then((
         [
             _focusOrgs,
@@ -89,6 +97,9 @@ async function main() {
             _userSignedUpAt,
             _ossContributors,
             _companyOssContribution,
+            _contributedFocusOrganizations,
+            _contributedFocusProjectPrimaryLanguages,
+            _weightedContributedFocusProjectLanguages,
         ]) => {
         focusOrgs = _focusOrgs as { [name:string]:number };
         focusRepos = _focusRepos as { [nameWithOwner:string]:number };
@@ -98,11 +109,15 @@ async function main() {
         userSignedUpAt = _userSignedUpAt as { [date:string]:number };
         ossContributors = _ossContributors as OssContributor[];
         companyOssContribution = _companyOssContribution as { [company:string]:CompanyInformation };
+        contributedFocusOrganizations = _contributedFocusOrganizations as { [company:string]:{score:number; contributors:number; companies:string[];} };
+        contributedFocusProjectPrimaryLanguages = _contributedFocusProjectPrimaryLanguages as { [language:string]:number };
+        weightedContributedFocusProjectLanguages = _weightedContributedFocusProjectLanguages as { [language:string]:number };
     });
 
     renderUserCountVisualizations();
     renderFocusOrgsAndRepoVisualizations();
     renderCompanyVisualizations();
+    renderContributedFocusProjectVisualizations();
 }
 
 function enhanceLinks() {
@@ -362,6 +377,56 @@ function renderCompanyVisualizations() {
 
     new LollipopChart("#company-oss-contributor-count-chart", companyOssCountributorCountData).draw();
     new LollipopChart("#company-oss-contributor-score-chart", companyOssContributorScoreData).draw();
+}
+
+function renderContributedFocusProjectVisualizations() {
+    // get the sorted list of keys
+    let contributedFocusOrganizationsKeys = Object.keys(contributedFocusOrganizations);
+    contributedFocusOrganizationsKeys.sort((a, b) => contributedFocusOrganizations[b].score - contributedFocusOrganizations[a].score);
+
+    // get top N focus orgs
+    contributedFocusOrganizationsKeys = contributedFocusOrganizationsKeys.slice(0, 50);
+
+    // convert contributedFocusOrganizations from a map to an array
+    let index = 1;
+    const contributedFocusOrganizationsArray = contributedFocusOrganizationsKeys
+        .map((company) => {
+            return [
+                index++,
+                company,
+                contributedFocusOrganizations[company].score,
+                contributedFocusOrganizations[company].contributors,
+                contributedFocusOrganizations[company].companies.length,
+            ];
+        });
+
+    // update the company oss contributor count tables
+    d3
+        .select("#contributed-orgs-table")
+        .append("tbody")
+        .selectAll("tr")
+        .data(contributedFocusOrganizationsArray)
+        .enter()
+        .append("tr")
+        .selectAll("td")
+        .data(function (d:[]) {
+            return d;
+        })
+        .enter()
+        .append("td")
+        .html(function (d, index) {
+            switch (index) {
+                case 1: {
+                    return `<a class="link-dark" href="https://github.com/${d}" target="_blank">${d}</a>`
+                }
+                default: {
+                    return <any>d;
+                }
+            }
+        });
+
+    // ignore number formatting here, it is ok
+    jQuery(".contributed-org-count").html(String(Object.keys(contributedFocusOrganizations).length));
 }
 
 function mostContributedOrgs(contributionScoresPerRepository:{ [repoNameWithOwner:string]:number }, limit:number) {
