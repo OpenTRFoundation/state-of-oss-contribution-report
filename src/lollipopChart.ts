@@ -4,23 +4,36 @@ export type LollipopChartData = {
     [bucket:string]:number;
 };
 
+export type LollipopChartOptions = {
+    xAxisScaleExponent?:number;
+    xAxisMaxFactor?:number;
+}
+
 const CHART_REFERENCE_WIDTH = 780;
 const CHART_REFERENCE_HEIGHT = Math.floor(CHART_REFERENCE_WIDTH * 3 / 4)
 const X_AXIS_ANNOTATION_REFERENCE_HEIGHT = 50;
 const Y_AXIS_ANNOTATION_REFERENCE_WIDTH = 230;
 
-const X_AXIS_SCALE_EXPONENT = 0.5;
-const X_AXIS_MAX_FACTOR = 1.1;
+const DEFAULT_X_AXIS_SCALE_EXPONENT = 0.5;
+const DEFAULT_X_AXIS_MAX_FACTOR = 1.1;
 const Y_AXIS_PADDING = 1;
 const CIRCLE_SIZE = CHART_REFERENCE_WIDTH / 150;
 
 export class LollipopChart {
     private readonly chartContainerName:string;
     private readonly data:LollipopChartData;
+    private options:LollipopChartOptions;
 
-    constructor(chartContainerName:string, data:LollipopChartData) {
+    constructor(chartContainerName:string, data:LollipopChartData, options:LollipopChartOptions = {}) {
         this.chartContainerName = chartContainerName;
         this.data = data;
+        this.options = options;
+        if(!this.options.xAxisScaleExponent) {
+            this.options.xAxisScaleExponent = DEFAULT_X_AXIS_SCALE_EXPONENT;
+        }
+        if(!this.options.xAxisMaxFactor) {
+            this.options.xAxisMaxFactor = DEFAULT_X_AXIS_MAX_FACTOR;
+        }
     }
 
     draw() {
@@ -55,9 +68,9 @@ export class LollipopChart {
 
         // Add X axis
         const xScale = d3.scalePow()
-            .domain([0, maxValue * X_AXIS_MAX_FACTOR])
+            .domain([0, maxValue * this.options.xAxisMaxFactor])
             .range([0, xAxisWidth])
-            .exponent(X_AXIS_SCALE_EXPONENT);
+            .exponent(this.options.xAxisScaleExponent);
 
         svg.append("g")
             .attr("transform", `translate(0, ${yAxisHeight})`)

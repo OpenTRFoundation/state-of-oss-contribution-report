@@ -145,3 +145,13 @@ footer {
   fill: #000;
   font-size: 1rem;
 }
+
+.pie-chart-slice {
+  stroke: #000;
+  stroke-width: 0.1rem;
+}
+
+.pie-chart-label{
+  text-anchor: middle;
+  font-size: 1rem;
+}

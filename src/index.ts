@@ -5,19 +5,18 @@ import d3 from "d3";
 const REPORT_DATA_REF = "main";
 
 // TODO: additional graphs:
-// - Top focus orgs and repos that people from TR contribute to
-// - Languages of top focus orgs and repos that people from TR contribute to
-// - Top languages of OSS contribution repos
 // - # of focus orgs that people from TR contribute to (5 people contribute to 10+ focus orgs, 10 people contribute to 5-10 focus orgs, 100 people contribute to 1-5 focus orgs)
 
 import {BubbleMap} from "./bubbleMap";
 import {NumberFormatterEN, NumberFormatterTR} from "./common";
 import {LollipopChart} from "./lollipopChart";
+import {PieChart} from "./pieChart";
 import {WordCloud} from "./wordCloud";
 import {BarChart} from "./barChart";
 
 const OTHER_COMPANY = "-Other-";
 const UNKNOWN_COMPANY = "-Unknown-";
+const OTHER_LANGUAGE = "-Other-";
 
 type OssContributor = {
     profile:{
@@ -56,8 +55,6 @@ let userSignedUpAt:{ [date:string]:number };
 let ossContributors:OssContributor[];
 let companyOssContribution:{ [company:string]:CompanyInformation };
 let contributedFocusOrganizations:{ [company:string]:{score:number; contributors:number; companies:string[];}};
-
-// TODO: use
 let contributedFocusProjectPrimaryLanguages:{ [language:string]:number };
 let weightedContributedFocusProjectLanguages:{ [language:string]:number };
 
@@ -387,6 +384,7 @@ function renderContributedFocusProjectVisualizations() {
     // get top N focus orgs
     contributedFocusOrganizationsKeys = contributedFocusOrganizationsKeys.slice(0, 50);
 
+    // TODO: show sum of stars, number of matched focus repos, etc.
     // convert contributedFocusOrganizations from a map to an array
     let index = 1;
     const contributedFocusOrganizationsArray = contributedFocusOrganizationsKeys
@@ -427,6 +425,49 @@ function renderContributedFocusProjectVisualizations() {
 
     // ignore number formatting here, it is ok
     jQuery(".contributed-org-count").html(String(Object.keys(contributedFocusOrganizations).length));
+
+    // get the total number of repositories contributed to, from the contributedFocusProjectPrimaryLanguages map
+    const totalNumberOfRepositories = Object.values(contributedFocusProjectPrimaryLanguages).reduce((a, b) => a + b, 0);
+    // ignore number formatting here, it is ok
+    jQuery(".contributed-repo-count").html(String(totalNumberOfRepositories));
+
+    // get the top N primary languages and their counts, combine the rest under "Other"
+    const contributedFocusProjectPrimaryLanguagesKeys = Object.keys(contributedFocusProjectPrimaryLanguages);
+    contributedFocusProjectPrimaryLanguagesKeys.sort((a, b) => contributedFocusProjectPrimaryLanguages[b] - contributedFocusProjectPrimaryLanguages[a]);
+    const topNPrimaryLanguages = contributedFocusProjectPrimaryLanguagesKeys.slice(0, 15);
+    const otherPrimaryLanguages = contributedFocusProjectPrimaryLanguagesKeys.slice(15);
+    let otherPrimaryLanguagesCount = 0;
+    for (const language of otherPrimaryLanguages) {
+        otherPrimaryLanguagesCount += contributedFocusProjectPrimaryLanguages[language];
+    }
+    const topNPrimaryLanguagesWithOtherCounts:{ [language:string]:number } = {};
+    for (const language of topNPrimaryLanguages) {
+        topNPrimaryLanguagesWithOtherCounts[language] = contributedFocusProjectPrimaryLanguages[language];
+    }
+    topNPrimaryLanguagesWithOtherCounts[OTHER_LANGUAGE] = otherPrimaryLanguagesCount;
+
+    new LollipopChart("#repo-primary-language-chart", topNPrimaryLanguagesWithOtherCounts, {
+        xAxisScaleExponent: 1,
+        xAxisMaxFactor: 1.1,
+    }).draw();
+
+
+    // get the top N languages, combine the rest under "Other"
+    const contributedFocusProjectWeightedLanguagesKeys = Object.keys(weightedContributedFocusProjectLanguages);
+    contributedFocusProjectWeightedLanguagesKeys.sort((a, b) => weightedContributedFocusProjectLanguages[b] - weightedContributedFocusProjectLanguages[a]);
+    const topNWeightedLanguages = contributedFocusProjectWeightedLanguagesKeys.slice(0, 10);
+    const otherWeightedLanguages = contributedFocusProjectWeightedLanguagesKeys.slice(10);
+    let otherWeightedLanguagesTotal = 0;
+    for (const language of otherWeightedLanguages) {
+        otherWeightedLanguagesTotal += weightedContributedFocusProjectLanguages[language];
+    }
+    const topNWeightedLanguagesWithOtherCounts:{ [language:string]:number } = {};
+    for (const language of topNWeightedLanguages) {
+        topNWeightedLanguagesWithOtherCounts[language] = Math.floor(weightedContributedFocusProjectLanguages[language]);
+    }
+    topNWeightedLanguagesWithOtherCounts[OTHER_LANGUAGE] = Math.floor(otherWeightedLanguagesTotal);
+
+    new PieChart("#repo-weighted-language-chart", topNWeightedLanguagesWithOtherCounts).draw();
 }
 
 function mostContributedOrgs(contributionScoresPerRepository:{ [repoNameWithOwner:string]:number }, limit:number) {

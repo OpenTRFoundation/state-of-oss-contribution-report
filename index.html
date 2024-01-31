@@ -1733,7 +1733,7 @@
 
         <div>
             <h2>
-                <span lang="en">Top organizations</span>
+                <span lang="en">Top contributed organizations</span>
                 <span lang="tr">En çok katkı yapılan organizasyonlar</span>
             </h2>
             <div id="contributed-orgs-table-container">
@@ -1771,9 +1771,11 @@
             <p class="lead">
                 <span lang="en">
                     There are <span class="contributed-org-count">N</span> organizations that a contributor from Turkey contributed to in the last 90 days.
+                    These people contributed to a total of <span class="contributed-repo-count">N</span> repositories in these organizations.
                 </span>
                 <span lang="tr">
                     Son 90 günde Türkiye'den bir kişinin katkıda bulunduğu <span class="contributed-org-count">N</span> organizasyon var.
+                    Bu kişiler bu organizasyonlardaki toplam <span class="contributed-repo-count">N</span> repository'ye katkıda bulundu.
                 </span>
             </p>
             <p class="lead">
@@ -1788,31 +1790,73 @@
             </p>
         </div>
 
-    </div>
+        <div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <h2 class="text-center">
+                        <span lang="en">
+                            Primary languages of repositories contributed
+                        </span>
+                        <span lang="tr">
+                            Katkıda bulunulan repository'lerin ana dilleri
+                        </span>
+                    </h2>
+                    <div id="repo-primary-language-chart"></div>
+                </div>
 
-    <div>
-        <h1 class="display-6 section-header">
-            <span lang="en">
-                10. Languages
-            </span>
-            <span lang="tr">
-                10. Diller
-            </span>
-        </h1>
-        <div class="row">
-            <div id="contributed-focus-project-primary-language-chart" class="col-xl-6"></div>
-            <div id="weighted-contributed-focus-project-language-chart" class="col-xl-6"></div>
+                <div class="col-xl-6">
+                    <h2 class="text-center">
+                        <span lang="en">
+                            Estimated contributions by language
+                        </span>
+                        <span lang="tr">
+                            Dil bazında tahmini katkılar
+                        </span>
+                    </h2>
+                    <div id="repo-weighted-language-chart">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
+        <div class="mt-3">
+            <h3>
+                <span lang="en">Summary</span>
+                <span lang="tr">Özet</span>
+            </h3>
+            <p class="lead">
+                <span lang="en">
+                    Contributors from Turkey contributed to projects with various programming languages. Since many repositories
+                    have multiple languages, the GitHub defines a "primary language" term, which is the language that has the most code in the repository.
+                    In the first chart above, we show the primary languages of the repositories that contributors from Turkey contributed to.
+                </span>
+                <span lang="tr">
+                    Türkiye'den katkıda bulunanlar çeşitli programlama dillerine sahip projelere katkıda bulundu.
+                    Birçok repository'nin birden fazla dili olduğundan, GitHub, "ana dil" terimini tanımlamaktadır. Bu, repository'de en çok kodu olan dildir.
+                    Yukarıdaki ilk tabloda, Türkiye'den katkıda bulunanların katkıda bulunduğu repository'lerin ana dillerini gösteriyoruz.
+                </span>
+            </p>
+            <p class="lead">
+                <span lang="en">
+                    Also in the second chart, we show the estimated contributions by language.
+                    We cannot examine each commit and determine the language of the commit. Instead, we assume an equal contribution to each language in a repository.
+                </span>
+                <span lang="tr">
+                    Ayrıca ikinci tabloda, dil bazında tahmini katkıları gösteriyoruz.
+                    Her bir commit'i inceleyip commit'in dilini belirleyemiyoruz. Bunun yerine, bir repository'de her dil için eşit katkı varsayıyoruz.
+                </span>
+            </p>
+        </div>
+
+    </div>
 
     <div>
         <h1 class="display-6 section-header">
             <span lang="en">
-                11. Take aways
+                10. Take aways
             </span>
             <span lang="tr">
-                11. Görüşler
+                10. Görüşler
             </span>
         </h1>
         <ul class="lead" style="list-style: decimal;">
