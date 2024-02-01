@@ -1315,31 +1315,31 @@
                     \begin{gather}
                         &sumOfScores \\
                         &\times \\
-                        &contribDiversityMul
+                        &contribDiversityMultiplier
                     \end{gather}
                     \end{aligned}
                 } $$
             </span>
             <span class="d-none d-md-block">
-                $$ userScore = \sqrt{sumOfScores \times contribDiversityMul} $$
+                $$ userScore = \sqrt{sumOfScores \times contribDiversityMultiplier} $$
             </span>
         </p>
         <br/>
         <p class="lead">
             <span lang="en">
-                The contribution diversity multiplier, $contribDiversityMul$, is obtained by finding the number of focus organizations the user contributed to. Since the number can be high, only 25% of its value is used.
+                The contribution diversity multiplier, $contribDiversityMultiplier$, is obtained by finding the number of focus organizations the user contributed to. Since the number can be high, only 25% of its value is used.
             </span>
             <span lang="tr">
-                Katkı çeşitliliği çarpanı $contribDiversityMul$, kullanıcının katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                Katkı çeşitliliği çarpanı $contribDiversityMultiplier$, kullanıcının katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ contribDiversityMul = $$
+                $$ contribDiversityMultiplier = $$
                 $$ (contributedFocusOrgs \times 25\%) + 1 $$
             </span>
             <span class="d-none d-md-block">
-                $$ contribDiversityMul = 1 + (contributedFocusOrgs \times 25\%) $$
+                $$ contribDiversityMultiplier = 1 + (contributedFocusOrgs \times 25\%) $$
             </span>
         </p>
         <p class="lead">
@@ -1636,48 +1636,48 @@
                                 \begin{aligned}
                                 \begin{gather}
                                     &sumOfScores \times \\
-                                    &userDiversityMul \times \\
-                                    &contribDiversityMul
+                                    &userDiversityMultiplier \times \\
+                                    &contribDiversityMultiplier
                                 \end{gather}
                                 \end{aligned}
                             \right) $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ score = sumOfScores \times userDiversityMul \times contribDiversityMul $$
+                            $$ score = sumOfScores \times userDiversityMultiplier \times contribDiversityMultiplier $$
                         </span>
                     </p>
                     <p class="lead">
                         <span lang="en">
-                            The user diversity multiplier, $userDiversityMul$, is obtained by finding the number of oss contributors from that company. Since the number can be high, only 25% of its value is used.
+                            The user diversity multiplier, $userDiversityMultiplier$, is obtained by finding the number of oss contributors from that company. Since the number can be high, only 25% of its value is used.
                         </span>
                         <span lang="tr">
-                            Kullanıcı çeşitliliği çarpanı $userDiversityMul$, o şirketten gelen açık kaynağa katkı yapanların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                            Kullanıcı çeşitliliği çarpanı $userDiversityMultiplier$, o şirketten gelen açık kaynağa katkı yapanların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
                         </span>
                     </p>
                     <p>
                         <span class="d-md-none">
-                            $$ userDiversityMul = $$
+                            $$ userDiversityMultiplier = $$
                             $$ (contributorCount \times 25\%) +1 $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ userDiversityMul = 1 + (contributorCount \times 25\%) $$
+                            $$ userDiversityMultiplier = 1 + (contributorCount \times 25\%) $$
                         </span>
                     </p>
                     <p class="lead">
                         <span lang="en">
-                            Likewise, the contribution diversity multiplier, $contribDiversityMul$, is obtained by finding the number of focus organizations the company contributed to. Again, since the number can be high, only 25% of its value is used.
+                            Likewise, the contribution diversity multiplier, $contribDiversityMultiplier$, is obtained by finding the number of focus organizations the company contributed to. Again, since the number can be high, only 25% of its value is used.
                         </span>
                         <span lang="tr">
-                            Benzer şekilde, katkı çeşitliliği çarpanı $contribDiversityMul$, şirketin katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Yine, bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                            Benzer şekilde, katkı çeşitliliği çarpanı $contribDiversityMultiplier$, şirketin katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Yine, bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
                         </span>
                     </p>
                     <p>
                         <span class="d-md-none">
-                            $$ contribDiversityMul = $$
+                            $$ contribDiversityMultiplier = $$
                             $$ (contributedFocusOrgs \times 25\%) + 1 $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ contribDiversityMul = 1 + (contributedFocusOrgs \times 25\%) $$
+                            $$ contribDiversityMultiplier = 1 + (contributedFocusOrgs \times 25\%) $$
                         </span>
                     </p>
                     <p class="lead">
