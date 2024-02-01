@@ -1367,7 +1367,8 @@
                 $$ \sum \left(
                     \begin{aligned}
                     \begin{gather}
-                        &{\color{BurntOrange}userRepositoryContribScore} \times \\
+                        &{\color{BurntOrange}userRepositoryContribScore} \\
+                        &\times \\
                         &(1 + ({\color{PineGreen}repoScore} \times 5\%))
                     \end{gather}
                     \end{aligned}
@@ -1637,8 +1638,10 @@
                             $$ \left(
                                 \begin{aligned}
                                 \begin{gather}
-                                    &{\color{Emerald}sumOfUserScores} \times \\
-                                    &{\color{Brown}userDiversityMultiplier} \times \\
+                                    &{\color{Emerald}sumOfUserScores}\\
+                                    &\times \\
+                                    &{\color{Brown}userDiversityMultiplier} \\
+                                    &\times \\
                                     &{\color{OrangeRed}contribDiversityMultiplier}
                                 \end{gather}
                                 \end{aligned}
