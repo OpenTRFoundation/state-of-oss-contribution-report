@@ -17,8 +17,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.7/d3.layout.cloud.min.js" crossorigin="anonymous"></script>
 <script>
     MathJax = {
-        tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]},
-        svg: {fontCache: 'global', displayAlign: 'left'}
+        tex: {inlineMath: [['$', '$'], ['\\(', '\\)']], packages: {'[+]': ['color']}},
+        svg: {fontCache: 'global', displayAlign: 'left'},
+        // available colors: https://en.wikibooks.org/wiki/LaTeX/Colors#Predefined_colors
+        loader: {load: ['[tex]/color']},
     };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" crossorigin="anonymous"></script>
@@ -1313,33 +1315,33 @@
                 $$ \sqrt{
                     \begin{aligned}
                     \begin{gather}
-                        &sumOfScores \\
+                        &{\color{CornflowerBlue}sumOfScores} \\
                         &\times \\
-                        &contribDiversityMultiplier
+                        &{\color{RedViolet}contribDiversityMultiplier}
                     \end{gather}
                     \end{aligned}
                 } $$
             </span>
             <span class="d-none d-md-block">
-                $$ userScore = \sqrt{sumOfScores \times contribDiversityMultiplier} $$
+                $$ userScore = \sqrt{ {\color{CornflowerBlue}sumOfScores} \times {\color{RedViolet}contribDiversityMultiplier} } $$
             </span>
         </p>
         <br/>
         <p class="lead">
             <span lang="en">
-                The contribution diversity multiplier, $contribDiversityMultiplier$, is obtained by finding the number of focus organizations the user contributed to. Since the number can be high, only 25% of its value is used.
+                The contribution diversity multiplier, ${\color{RedViolet}contribDiversityMultiplier}$, is obtained by finding the number of focus organizations the user contributed to. Since the number can be high, only 25% of its value is used.
             </span>
             <span lang="tr">
-                Katkı çeşitliliği çarpanı $contribDiversityMultiplier$, kullanıcının katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                Katkı çeşitliliği çarpanı ${\color{RedViolet}contribDiversityMultiplier}$, kullanıcının katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ contribDiversityMultiplier = $$
+                $$ {\color{RedViolet}contribDiversityMultiplier} = $$
                 $$ (contributedFocusOrgs \times 25\%) + 1 $$
             </span>
             <span class="d-none d-md-block">
-                $$ contribDiversityMultiplier = 1 + (contributedFocusOrgs \times 25\%) $$
+                $$ {\color{RedViolet}contribDiversityMultiplier} = 1 + (contributedFocusOrgs \times 25\%) $$
             </span>
         </p>
         <p class="lead">
@@ -1353,42 +1355,42 @@
         <br/>
         <p class="lead">
             <span lang="en">
-                User's sum of scores, $sumOfScores$, is the sum of scores that are per-repository. The score per repository is calculated by multiplying the user's contribution score for that repository with a multiplier that's based on the repository's score.
+                User's sum of scores, ${\color{CornflowerBlue}sumOfScores}$, is the sum of scores that are per-repository. The score per repository is calculated by multiplying the user's contribution score for that repository with a multiplier that's based on the repository's score.
             </span>
             <span lang="tr">
-                Kullanıcının skor toplamı $sumOfScores$, repository başına skorların toplamıdır. Repository başına skor, kullanıcının o repository için katkı skoru ile repository'nin skoruna dayalı bir çarpanın çarpılmasıyla hesaplanır.
+                Kullanıcının skor toplamı ${\color{CornflowerBlue}sumOfScores}$, repository başına skorların toplamıdır. Repository başına skor, kullanıcının o repository için katkı skoru ile repository'nin skoruna dayalı bir çarpanın çarpılmasıyla hesaplanır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ sumOfScores  = $$
+                $$ {\color{CornflowerBlue}sumOfScores}  = $$
                 $$ \sum \left(
                     \begin{aligned}
                     \begin{gather}
-                        &userRepositoryContribScore \times \\
-                        &(1 + (repoScore \times 5\%))
+                        &{\color{BurntOrange}userRepositoryContribScore} \times \\
+                        &(1 + ({\color{PineGreen}repoScore} \times 5\%))
                     \end{gather}
                     \end{aligned}
                 \right) $$
             </span>
             <span class="d-none d-md-block">
-                $$ sumOfScores  = \sum (userRepositoryContribScore \times (1 + (repoScore \times 5\%)) $$
+                $$ {\color{CornflowerBlue}sumOfScores}  = \sum ({\color{BurntOrange}userRepositoryContribScore} \times (1 + ({\color{PineGreen}repoScore} \times 5\%)) $$
             </span>
         </p>
         <br/>
         <p class="lead">
             <span lang="en">
-                User's contribution score for a repository, $userRepositoryContribScore$, is calculated by summing the contribution scores for each contribution type for that repository.
+                User's contribution score for a repository, ${\color{BurntOrange}userRepositoryContribScore}$, is calculated by summing the contribution scores for each contribution type for that repository.
                 The contribution score for each contribution type is calculated by multiplying the normalized contribution count with a coefficient that's different for each the contribution type.
             </span>
             <span lang="tr">
-                Kullanıcının bir repository için katkı skoru $userRepositoryContribScore$, o repository için her katkı türünde olan katkı skorlarının toplanmasıyla hesaplanır.
+                Kullanıcının bir repository için katkı skoru ${\color{BurntOrange}userRepositoryContribScore}$, o repository için her katkı türünde olan katkı skorlarının toplanmasıyla hesaplanır.
                 Her katkı türü için katkı skoru, normalleştirilmiş katkı sayısının, katkı türüne göre farklı olan bir katsayıyla çarpılmasıyla hesaplanır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ userRepositoryContribScore = $$
+                $$ {\color{BurntOrange}userRepositoryContribScore} = $$
                 $$ \sum
                 \left(
                     \begin{aligned}
@@ -1412,7 +1414,7 @@
                 $$
             </span>
             <span class="d-none d-md-block">
-                $$ userRepositoryContribScore = \sum (\sqrt{contribCount} \times contribTypeCoef) $$
+                $$ {\color{BurntOrange}userRepositoryContribScore} = \sum (\sqrt{contribCount} \times contribTypeCoef) $$
 
                 $$
                 contribTypeCoef=
@@ -1430,13 +1432,13 @@
                 For example a user has 100 pull requests for repository A which has a score of 100 and 10000 commits for repository B which has a score of 20.
                 The score for repository A will be $(\sqrt{100} \times 60 \times (1 + (100 \times 5\%))$ = 3600 and
                 the score for repository B will be $(\sqrt{10000} \times 1 \times (1 + (20 \times 5\%))$ = 200.
-                Hence, $sumOfScores$ will be $3800$.
+                Hence, ${\color{CornflowerBlue}sumOfScores}$ will be $3800$.
             </span>
             <span lang="tr">
                 Örneğin, bir kullanıcının 100 skorlu A repository'si için 100 pull request'i ve 20 skorlu B repository'si için 10000 commit'i var.
                 A repository'si için skor $(\sqrt{100} \times 60 \times (1 + (100 \times 5\%))$ = 3600 ve
                 B repository'si için skor $(\sqrt{10000} \times 1 \times (1 + (20 \times 5\%))$ = 200 olacaktır.
-                Dolayısıyla, $sumOfScores$ $3800$ olacaktır.
+                Dolayısıyla, ${\color{CornflowerBlue}sumOfScores}$ $3800$ olacaktır.
             </span>
         </p>
         <p class="lead">
@@ -1452,17 +1454,17 @@
         <br/>
         <p class="lead">
             <span lang="en">
-                The repository score, $repoScore$, is calculated by weighted summing the scores for each metric for that repository and then normalizing it.
+                The repository score, ${\color{PineGreen}repoScore}$, is calculated by weighted summing the scores for each metric for that repository and then normalizing it.
                 Also, an organization multiplier is applied to the score.
             </span>
             <span lang="tr">
-                Repository skoru $repoScore$, o repository için metriklerin ağırlıklı toplanması ve ardından normalleştirilmesiyle hesaplanır.
+                Repository skoru ${\color{PineGreen}repoScore}$, o repository için metriklerin ağırlıklı toplanması ve ardından normalleştirilmesiyle hesaplanır.
                 Ayrıca, skora bir organizasyon çarpanı uygulanır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ repoScore = $$
+                $$ {\color{PineGreen}repoScore} = $$
                 $$
                 \begin{aligned}
                 \begin{gather}
@@ -1476,13 +1478,13 @@
                     }
                     {100}
                 }\\
-                &\times orgMultiplier
+                &\times {\color{Brown}orgMultiplier}
                 \end{gather}
                 \end{aligned}
                 $$
             </span>
             <span class="d-none d-md-block">
-                $$ repoScore = \sqrt{
+                $$ {\color{PineGreen}repoScore} = \sqrt{
                     \dfrac{
                         \begin{aligned}
                             &(forks \times 5) + (stars \times 20) + (PRs \times 20) + \\
@@ -1491,7 +1493,7 @@
                     }
                     {100}
                 }
-                \times orgMultiplier
+                \times {\color{Brown}orgMultiplier}
             $$
             </span>
         </p>
@@ -1500,32 +1502,32 @@
                 As the numbers correlate (e.g. projects with more stars have other metrics higher as well), a normalization is done by square rooting the sum.
                 Also, we want to give more weight to repositories that belong to an established organization.
                 This is mostly the case for open source projects that are in a good shape.
-                This is done by the $orgMultiplier$.
+                This is done by the ${\color{Brown}orgMultiplier}$.
             </span>
             <span lang="tr">
                 Sayılar birbiriyle ilişkili olduğundan (örneğin, daha fazla star'a sahip projelerin diğer metrikleri de daha yüksektir), toplamın karekökü alınarak normalleştirme yapılır.
                 Ayrıca, oturmuş bir organizasyona ait olan repository'lere daha fazla ağırlık vermek istiyoruz.
                 Bu durum, çoğunlukla iyi durumda olan açık kaynak projeleri için geçerli.
-                Bu da $orgMultiplier$ ile yapılmakta.
+                Bu da ${\color{Brown}orgMultiplier}$ ile yapılmakta.
             </span>
         </p>
         <br/>
         <p class="lead">
             <span lang="en">
-                The organization multiplier, $orgMultiplier$, is calculated by finding the number of repositories of an organization that passed the criteria to
+                The organization multiplier, ${\color{Brown}orgMultiplier}$, is calculated by finding the number of repositories of an organization that passed the criteria to
                 be matched as a focus repository candidate.
             </span>
             <span lang="tr">
-                Organizasyon çarpanı $orgMultiplier$, bir organizasyonun odak repository adayı kriterlerini geçen repository sayısının bulunmasıyla hesaplanır.
+                Organizasyon çarpanı ${\color{Brown}orgMultiplier}$, bir organizasyonun odak repository adayı kriterlerini geçen repository sayısının bulunmasıyla hesaplanır.
             </span>
         </p>
         <p>
             <span class="d-md-none">
-                $$ orgMultiplier = $$
+                $$ {\color{Brown}orgMultiplier} = $$
                 $$ \left(\sqrt{matchedReposInOrg} \times 1\% \right) + 1 $$
             </span>
             <span class="d-none d-md-block">
-                $$ orgMultiplier = 1 + (\sqrt{matchedReposInOrg} \times 1\%) $$
+                $$ {\color{Brown}orgMultiplier} = 1 + (\sqrt{matchedReposInOrg} \times 1\%) $$
             </span>
         </p>
         <p class="lead">
@@ -1635,65 +1637,65 @@
                             $$ \left(
                                 \begin{aligned}
                                 \begin{gather}
-                                    &sumOfScores \times \\
-                                    &userDiversityMultiplier \times \\
-                                    &contribDiversityMultiplier
+                                    &{\color{Emerald}sumOfUserScores} \times \\
+                                    &{\color{Brown}userDiversityMultiplier} \times \\
+                                    &{\color{OrangeRed}contribDiversityMultiplier}
                                 \end{gather}
                                 \end{aligned}
                             \right) $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ score = sumOfScores \times userDiversityMultiplier \times contribDiversityMultiplier $$
+                            $$ score = {\color{Emerald}sumOfUserScores} \times {\color{Brown}userDiversityMultiplier} \times {\color{OrangeRed}contribDiversityMultiplier} $$
                         </span>
                     </p>
                     <p class="lead">
                         <span lang="en">
-                            The user diversity multiplier, $userDiversityMultiplier$, is obtained by finding the number of oss contributors from that company. Since the number can be high, only 25% of its value is used.
+                            The user diversity multiplier, ${\color{Brown}userDiversityMultiplier}$, is obtained by finding the number of oss contributors from that company. Since the number can be high, only 25% of its value is used.
                         </span>
                         <span lang="tr">
-                            Kullanıcı çeşitliliği çarpanı $userDiversityMultiplier$, o şirketten gelen açık kaynağa katkı yapanların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                            Kullanıcı çeşitliliği çarpanı ${\color{Brown}userDiversityMultiplier}$, o şirketten gelen açık kaynağa katkı yapanların sayısının bulunmasıyla elde edilir. Bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
                         </span>
                     </p>
                     <p>
                         <span class="d-md-none">
-                            $$ userDiversityMultiplier = $$
+                            $$ {\color{Brown}userDiversityMultiplier} = $$
                             $$ (contributorCount \times 25\%) +1 $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ userDiversityMultiplier = 1 + (contributorCount \times 25\%) $$
+                            $$ {\color{Brown}userDiversityMultiplier} = 1 + (contributorCount \times 25\%) $$
                         </span>
                     </p>
                     <p class="lead">
                         <span lang="en">
-                            Likewise, the contribution diversity multiplier, $contribDiversityMultiplier$, is obtained by finding the number of focus organizations the company contributed to. Again, since the number can be high, only 25% of its value is used.
+                            Likewise, the contribution diversity multiplier, ${\color{OrangeRed}contribDiversityMultiplier}$, is obtained by finding the number of focus organizations the company contributed to. Again, since the number can be high, only 25% of its value is used.
                         </span>
                         <span lang="tr">
-                            Benzer şekilde, katkı çeşitliliği çarpanı $contribDiversityMultiplier$, şirketin katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Yine, bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
+                            Benzer şekilde, katkı çeşitliliği çarpanı ${\color{OrangeRed}contribDiversityMultiplier}$, şirketin katkıda bulunduğu odak organizasyonların sayısının bulunmasıyla elde edilir. Yine, bu sayı yüksek olabileceğinden, değerinin yalnızca %25'i kullanılır.
                         </span>
                     </p>
                     <p>
                         <span class="d-md-none">
-                            $$ contribDiversityMultiplier = $$
+                            $$ {\color{OrangeRed}contribDiversityMultiplier} = $$
                             $$ (contributedFocusOrgs \times 25\%) + 1 $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ contribDiversityMultiplier = 1 + (contributedFocusOrgs \times 25\%) $$
+                            $$ {\color{OrangeRed}contribDiversityMultiplier} = 1 + (contributedFocusOrgs \times 25\%) $$
                         </span>
                     </p>
                     <p class="lead">
                         <span lang="en">
-                            Finally, the sum of scores, $sumOfScores$, is the sum of scores of OSS contributors from that company.
+                            Finally, the sum of scores, ${\color{Emerald}sumOfUserScores}$, is the sum of scores of OSS contributors from that company.
                         </span>
                         <span lang="tr">
-                            Son olarak, skor toplamı $sumOfScores$, o şirketten gelen açık kaynağa katkıda bulunanların skorlarının toplamıdır.
+                            Son olarak, skor toplamı ${\color{Emerald}sumOfUserScores}$, o şirketten gelen açık kaynağa katkıda bulunanların skorlarının toplamıdır.
                         </span>
                     </p>
                     <p>
                         <span class="d-md-none">
-                            $$ sumOfUserScores = \sum userScore $$
+                            $$ {\color{Emerald}sumOfUserScores} = \sum userScore $$
                         </span>
                         <span class="d-none d-md-block">
-                            $$ sumOfUserScores = \sum userScore $$
+                            $$ {\color{Emerald}sumOfUserScores} = \sum userScore $$
                         </span>
                     </p>
                 </div>
