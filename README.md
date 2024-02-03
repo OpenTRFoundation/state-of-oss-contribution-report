@@ -54,9 +54,7 @@ In `main` branch:
 - Data in [province-populations.json](src/province-populations.json) is taken from Wikipedia.
 
 TODO:
-- Show company leaderboard
 - Show active vs inactive users
-- Show languages for top projects contributed to?
-- Social media tags (OpenTR website is also missing these stuff)
+- Social media metatags (OpenTR website is also missing these stuff)
 - Favicon
 - Google analytics
