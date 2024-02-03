@@ -37,7 +37,7 @@ npm run serve
 
 In `main` branch:
 - Update the date in `index.html`, for Turkish and English text
-- Update `REPORT_DATA_REF` in index.html with the new tag name of the data repository
+- Update `REPORT_DATA_REF` in `index.ts` with the new tag name of the data repository
 - Push changes to `upstream/main` branch
 - Reset `upstream/latest` branch to `upstream/main`
 
