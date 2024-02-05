@@ -55,6 +55,3 @@ In `main` branch:
 
 TODO:
 - Show active vs inactive users
-- Social media metatags (OpenTR website is also missing these stuff)
-- Favicon
-- Google analytics
