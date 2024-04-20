@@ -39,7 +39,6 @@ In `main` branch:
 - Update the date in `index.html`, for Turkish and English text
 - Update `REPORT_DATA_REF` in `index.ts` with the new tag name of the data repository
 - Push changes to `upstream/main` branch
-- Reset `upstream/latest` branch to `upstream/main`
 
 In the new branch:
 - Create a new branch from `main` branch, named `<year>-<month>`, e.g. `2024-01` and push it to the origin
@@ -47,6 +46,9 @@ In the new branch:
 In `main` branch:
 - Update `history.html` (add a new entry)
 
+Reset `upstream/latest` branch to `upstream/main`
+
+[history.html](..%2F..%2F..%2F..%2F..%2FDownloads%2Fhistory.html)
 ## Acknowledgements
 
 - [src/province-geojson.json](src/province-geojson.json) is taken from https://raw.githubusercontent.com/alpers/Turkey-Maps-GeoJSON/master/tr-cities.json
