@@ -1,6 +1,6 @@
 # OpenTR - State of Open Source Contribution in Turkey - Report
 
-This repository contains the source code for the OpenTR's [State of Open Source Contribution in Turkey](https://state.opentr.foundation/) report.
+This repository contains the source code for the OpenTR's [State of Open Source Contribution in Turkey](https://state-of-oss-contribution-report.netlify.app/) report.
 
 
 ## Implementation
@@ -25,13 +25,13 @@ npm run serve
 
 ## Deployment
 
-- `latest` branch is deployed to https://state.opentr.foundation/
+- `latest` branch is deployed to https://state-of-oss-contribution-report.netlify.app/
 - `main` branch is deployed to https://main--state-of-oss-contribution-report.netlify.app/
 - All the other branches are deployed to `https://<branch>--state-of-oss-contribution-report.netlify.app/`.
   Create a branch and push it on the origin to get Netlify to build and deploy it.
   This is the way to show the previous versions of the report.
 
-`history.html` is only referenced from the `latest` branch in all versions of the report. (https://state.opentr.foundation/history.html)
+`history.html` is only referenced from the `latest` branch in all versions of the report. (https://state-of-oss-contribution-report.netlify.app/history.html)
 
 ## Releasing a new version of the report
 
